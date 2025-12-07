@@ -8,18 +8,11 @@ const __dirname = path.dirname(__filename);
 
 import ForgeCSS from '../../packages/forgecss/index.js';
 
-const ForgeCSSClient = fs.readFileSync(path.join(__dirname, "../../packages/forgecss/dist/forgecss.min.js"), "utf-8");
-
 const PORT = 5203;
 const app = express();
 
 ForgeCSS({
-  styles: {
-    sourceDir: path.join(__dirname, "public")
-  },
-  ui: {
-    sourceDir: path.join(__dirname, "public")
-  },
+  source: path.join(__dirname, "public"),
   mapping: {
     queries: {
       desktop: { query: "min-width: 768px" }, // desktop
@@ -34,10 +27,6 @@ ForgeCSS({
   });
 
 app.use(express.static("public"));
-app.get("/forgecss.min.js", (req, res) => {
-  res.type("application/javascript");
-  res.send(ForgeCSSClient);
-});
 
 app.listen(PORT, () => {
   console.log("Server is running on http://localhost:" + PORT);
