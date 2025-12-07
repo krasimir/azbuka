@@ -1,13 +1,8 @@
 export type ForgeCSSOptions = {
-  styles: {
-    sourceDir: string;
-    match?: string[];
-  };
-  ui: {
-    sourceDir: string;
-    match?: string[];
-    attributes?: string[];
-  };
+  source: string;
+  stylesMatch?: string[];
+  declarationsMatch?: string[];
+  declarationsMatchAttributes?: string[];
   mapping: {
     queries: {
       [key: string]: {
@@ -15,7 +10,7 @@ export type ForgeCSSOptions = {
       };
     };
   };
-  output: string
+  output: string;
 };
 
 export default function forgecss(options?: ForgeCSSOptions): {

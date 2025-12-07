@@ -31,7 +31,7 @@ async function runForgeCSS(lookAtPath = null) {
     // The very first run
     config = await loadConfig(options.config);
     if (options.watch) {
-      const watcher = chokidar.watch([config.styles.sourceDir, config.ui.sourceDir], {
+      const watcher = chokidar.watch(config.source, {
         persistent: true,
         ignoreInitial: true,
         ignored: (p, stats) => {

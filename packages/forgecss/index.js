@@ -1,37 +1,28 @@
 import getAllFiles from "./lib/getAllFiles.js";
 import { extractStyles } from "./lib/styles.js";
-import { deleteDeclarations, extractDeclarations, getDeclarations } from "./lib/processFile.js";
+import { deleteDeclarations, extractDeclarations } from "./lib/processFile.js";
 import { generateOutputCSS } from "./lib/generator.js";
 
 const DEFAULT_OPTIONS = {
-  styles: {
-    sourceDir: null,
-    match: ['css']
-  },
-  ui: {
-    sourceDir: null,
-    match: ["html", "jsx", "tsx"],
-    attribute: ['class', 'className']
-  },
+  source: null,
+  stylesMatch: ['css', 'less', 'scss'],
+  declarationsMatch: ['html', 'jsx', 'tsx'],
+  declarationsMatchAttributes: ['class', 'className'],
   mapping: {
     queries: {}
   },
   output: null
 };
 
-export default function forgecss(options = { styles: {}, ui: {}, mapping: {}, output: null }) {
+export default function forgecss(options = { source: null, output: null, mapping: {} }) {
   const config = { ...DEFAULT_OPTIONS };
 
-  config.styles = Object.assign({}, DEFAULT_OPTIONS.styles, options.styles || {});
-  config.ui = Object.assign({}, DEFAULT_OPTIONS.ui, options.ui || {});
+  config.source = options.source || DEFAULT_OPTIONS.source;
   config.mapping = Object.assign({}, DEFAULT_OPTIONS.mapping, options.mapping || {});
   config.output = options.output || DEFAULT_OPTIONS.output;
 
-  if (!config.styles.sourceDir) {
-    throw new Error('forgecss: "styles.sourceDir" option is required.');
-  }
-  if (!config.ui.sourceDir) {
-    throw new Error('forgecss: "ui.sourceDir" option is required.');
+  if (!config.source) {
+    throw new Error('forgecss: "source" option is required.');
   }
   if (!config.output) {
     throw new Error('forgecss: "output" option is required.');
@@ -42,11 +33,11 @@ export default function forgecss(options = { styles: {}, ui: {}, mapping: {}, ou
       // fetching the styles
       try {
         if (lookAtPath) {
-          if (config.styles.match.includes(lookAtPath.split('.').pop().toLowerCase())) {
+          if (config.stylesMatch.includes(lookAtPath.split(".").pop().toLowerCase())) {
             await extractStyles(lookAtPath);
           }
         } else {
-          let files = await getAllFiles(config.styles.sourceDir, config.styles.match);
+          let files = await getAllFiles(config.source, config.stylesMatch);
           for (let file of files) {
             await extractStyles(file);
           }
@@ -57,23 +48,23 @@ export default function forgecss(options = { styles: {}, ui: {}, mapping: {}, ou
       // fetching the declarations
       try {
         if (lookAtPath) {
-          if (config.ui.match.includes(lookAtPath.split('.').pop().toLowerCase())) {
+          if (config.declarationsMatch.includes(lookAtPath.split(".").pop().toLowerCase())) {
             deleteDeclarations(lookAtPath);
             await extractDeclarations(lookAtPath);
           }
         } else {
-          let files = await getAllFiles(config.ui.sourceDir, config.ui.match);
+          let files = await getAllFiles(config.source, config.declarationsMatch);
           for (let file of files) {
             await extractDeclarations(file);
           }
         }
-      } catch(err) {
+      } catch (err) {
         console.error(`forgecss: error extracting declarations: ${err}`);
       }
       // generating the output CSS
       try {
         await generateOutputCSS(config);
-      } catch(err) {
+      } catch (err) {
         console.error(`forgecss: error generating output CSS: ${err}`);
       }
     }
