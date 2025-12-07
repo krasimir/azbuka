@@ -1,0 +1,13 @@
+@media all and (min-width: 768px) {
+    .desktop_maxw600 {
+        max-width: 600px
+    }
+    .desktop_p2 {
+        padding: 2rem
+    }
+}
+@media all and (max-width: 768px) {
+    .mobile_fz-sm {
+        font-size: 0.8em
+    }
+}

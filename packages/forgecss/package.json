@@ -1,0 +1,30 @@
+{
+  "name": "forgecss",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "ForgeCSS turns strings into fully generated responsive CSS using a custom DSL.",
+  "author": "Krasimir Tsonev",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:krasimir/ForgeCSS.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "css",
+    "dsl",
+    "generator",
+    "processor",
+    "responsive",
+    "media queries"
+  ],
+  "dependencies": {
+    "@swc/cli": "^0.7.7",
+    "@swc/core": "1.12.1",
+    "hast-util-from-html": "^2.0.3",
+    "postcss": "^8.5.6",
+    "postcss-safe-parser": "^7.0.1",
+    "unist-util-visit": "^5.0.0"
+  }
+}

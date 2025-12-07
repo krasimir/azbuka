@@ -1,0 +1,39 @@
+*, :after, :before {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  width: 100%;
+  height: 100%;
+}
+main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.grey-bg {
+  background-color: #d1d1d1;
+}
+.maxw300 {
+  max-width: 300px;
+}
+.maxw600 {
+  max-width: 600px;
+}
+.p1 {
+  padding: 1rem;
+}
+.p2 {
+  padding: 2rem;
+}
+.br1 {
+  border-radius: 1rem;
+}
+.fz-sm {
+  font-size: 0.8em;
+}
