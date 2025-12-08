@@ -1,6 +1,6 @@
 {
   "name": "forgecss",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "type": "module",
   "description": "ForgeCSS turns strings into fully generated responsive CSS using a custom DSL.",
   "author": "Krasimir Tsonev",

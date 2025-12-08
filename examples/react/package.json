@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "_dev": "concurrently \"vite\" \"forgecss --watch --verbose\"",
     "dev": "concurrently \"vite\" \"node ../../packages/forgecss/cli.js -w -v\"",
     "build": "forgecss --verbose && tsc -b && vite build",
     "lint": "eslint .",
@@ -12,7 +11,7 @@
   },
   "dependencies": {
     "concurrently": "^9.2.1",
-    "forgecss": "^0.1.6",
+    "forgecss": "^0.1.7",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
