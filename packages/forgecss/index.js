@@ -24,9 +24,6 @@ export default function ForgeCSS(options = { source: null, output: null, mapping
   if (!config.source) {
     throw new Error('forgecss: missing "source" in configuration.');
   }
-  if (!config.output) {
-    throw new Error('forgecss: missing "output" in configuration.');
-  }
 
   return {
     async parse(lookAtPath = null) {
@@ -63,7 +60,7 @@ export default function ForgeCSS(options = { source: null, output: null, mapping
       }
       // generating the output CSS
       try {
-        await generateOutputCSS(config);
+        return await generateOutputCSS(config);
       } catch (err) {
         console.error(`forgecss: error generating output CSS: ${err}`);
       }

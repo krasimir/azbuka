@@ -10,7 +10,7 @@ export type ForgeCSSOptions = {
       };
     };
   };
-  output: string;
+  output?: string;
 };
 
 export type ForgeInstance = {

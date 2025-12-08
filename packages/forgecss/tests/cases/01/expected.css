@@ -1,0 +1,8 @@
+@media all and ((min-width: 1024px)) {
+    .desktop_mt2 {
+        margin-top: 0.5rem
+    }
+    .desktop_mt1 {
+        margin-top: 0.25rem
+    }
+}
