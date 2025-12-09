@@ -5,9 +5,7 @@ export type ForgeCSSOptions = {
   usageAttributes?: string[];
   mapping?: {
     queries?: {
-      [key: string]: {
-        query: string;
-      };
+      [key: string]: string
     };
   };
   output?: string;

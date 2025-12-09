@@ -8,14 +8,14 @@ let USAGES = {};
 
 const { parse } = swc;
 
-export async function findUsages(filePath) {
+export async function findUsages(filePath, fileContent = null) {
   try {
     if (USAGES[filePath]) {
       // already processed
       return;
     }
     USAGES[filePath] = {};
-    const content = await readFile(filePath, "utf-8");
+    const content = fileContent ? fileContent : await readFile(filePath, "utf-8");
     const extension = filePath.split('.').pop().toLowerCase();
 
     // HTML

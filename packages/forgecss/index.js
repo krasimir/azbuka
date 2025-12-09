@@ -2,7 +2,6 @@ import getAllFiles from "./lib/getAllFiles.js";
 import { extractStyles } from "./lib/inventory.js";
 import { invalidateUsageCache, findUsages } from "./lib/processor.js";
 import { generateOutputCSS } from "./lib/generator.js";
-import stateTransformers from './lib/transformers/state.js'
 
 const DEFAULT_OPTIONS = {
   source: null,
@@ -10,8 +9,7 @@ const DEFAULT_OPTIONS = {
   usageFiles: ["html", "jsx", "tsx"],
   usageAttributes: ["class", "className"],
   mapping: {
-    queries: {},
-    state: stateTransformers
+    queries: {}
   },
   output: null
 };
@@ -21,8 +19,7 @@ export default function ForgeCSS(options) {
 
   config.source = options.source ?? DEFAULT_OPTIONS.source;
   config.mapping = {
-    queries: Object.assign({}, DEFAULT_OPTIONS.mapping.queries, options?.mapping?.queries ?? {}),
-    state: Object.assign({}, DEFAULT_OPTIONS.mapping.state, options?.mapping?.state ?? {})
+    queries: Object.assign({}, DEFAULT_OPTIONS.mapping.queries, options?.mapping?.queries ?? {})
   };
   config.output = options.output ?? DEFAULT_OPTIONS.output;
 

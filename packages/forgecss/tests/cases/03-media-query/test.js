@@ -8,15 +8,9 @@ export default async function test() {
     source: getPath(__dirname + "/src"),
     mapping: {
       queries: {
-        desktop: {
-          query: "(min-width: 1024px)"
-        },
-        mobile: {
-          query: "(max-width: 1023px)"
-        },
-        portrait: {
-          query: "(orientation: portrait)"
-        }
+        desktop: "(min-width: 1024px)",
+        mobile: "(max-width: 1023px)",
+        portrait: "(orientation: portrait)"
       }
     }
   });

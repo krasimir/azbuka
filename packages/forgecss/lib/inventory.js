@@ -4,8 +4,8 @@ import safeParser from "postcss-safe-parser";
 
 let INVENTORY = {};
 
-export async function extractStyles(filePath) {
-  const content = await readFile(filePath, 'utf-8');
+export async function extractStyles(filePath, css = null) {
+  const content = css !== null ? css : await readFile(filePath, 'utf-8');
   INVENTORY[filePath] = postcss.parse(content, { parser: safeParser });
 }
 export function getStylesByClassName(selector) {

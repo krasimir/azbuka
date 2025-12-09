@@ -1,18 +1,18 @@
 import postcss from "postcss";
 import { getStylesByClassName } from "../inventory.js";
 
-function stateTransformer(state, selectors, bucket) {
+export default function genericTransformer(label, selectors, bucket) {
   const root = postcss.root();
   selectors.forEach((selector) => {
-    const key = state + "_" + selector;
+    const key = `${label}_${selector}`;
     if (bucket[key]) {
       // already have that
       return;
     }
-    const rule = postcss.rule({ selector: `.${key}:${state}` });
+    const rule = postcss.rule({ selector: `.${key}:${label}` });
     const decls = getStylesByClassName(selector);
     if (decls.length === 0) {
-      console.warn(`forgecss: no styles found for class ".${selector}" used in state class "${state}"`);
+      console.warn(`forgecss: no styles found for class ".${selector}" used in state class "${label}"`);
       return;
     }
     decls.forEach((d) => {
@@ -28,12 +28,3 @@ function stateTransformer(state, selectors, bucket) {
     bucket[key] = root;
   });
 }
-
-const stateTransformers = {
-  hover: stateTransformer,
-  active: stateTransformer,
-  focus: stateTransformer,
-  disabled: stateTransformer
-};
-
-export default stateTransformers;

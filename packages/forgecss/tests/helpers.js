@@ -67,3 +67,11 @@ export const expect = {
     return result;
   }
 };
+export function minifyCSS(css = '') {
+  return css
+    .replace(/\/\*[^]*?\*\//g, "") // remove comments
+    .replace(/\s+/g, " ") // collapse spaces
+    .replace(/\s*([{}:;,])\s*/g, "$1") // trim syntax whitespace
+    .trim();
+
+}
