@@ -1,7 +1,33 @@
 import postcss from "postcss";
 import { getStylesByClassName } from "../inventory.js";
 
-export default function genericTransformer(label, selectors, bucket) {
+const ALLOWED_PSEUDO_CLASSES = [
+  "hover",
+  "active",
+  "focus",
+  "focus-visible",
+  "focus-within",
+  "disabled",
+  "enabled",
+  "read-only",
+  "read-write",
+  "checked",
+  "indeterminate",
+  "valid",
+  "invalid",
+  "required",
+  "optional",
+  "in-range",
+  "out-of-range",
+  "placeholder-shown",
+  "autofill",
+  "user-invalid"
+];
+
+export default function pseudoClassTransformer(label, selectors, bucket) {
+  if (!ALLOWED_PSEUDO_CLASSES.includes(label)) {
+    return false;
+  }
   const root = postcss.root();
   selectors.forEach((selector) => {
     const key = `${label}_${selector}`;
@@ -27,4 +53,5 @@ export default function genericTransformer(label, selectors, bucket) {
     root.append(rule);
     bucket[key] = root;
   });
+  return true;
 }

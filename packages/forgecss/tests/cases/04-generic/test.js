@@ -1,7 +1,7 @@
 import { minifyCSS, expect } from "../../helpers.js";
 import { extractStyles } from '../../../lib/inventory.js';
 import { findUsages } from '../../../lib/processor.js';
-import {generateOutputCSS} from '../../../lib/generator.js';
+import { generateOutputCSS } from '../../../lib/generator.js';
 import { invalidateInvetory } from "../../../lib/inventory.js";
 import { invalidateUsageCache } from "../../../lib/processor.js";
 
@@ -10,11 +10,6 @@ const CASES = [
     styles: ".red { color: red }",
     usage: '<div class="hover:red"></div>',
     expected: ".hover_red:hover{color:red}"
-  },
-  {
-    styles: ".red { color: red }",
-    usage: '<div class="first-child:red"></div>',
-    expected: ".first-child_red:first-child{color:red}"
   }
 ];
 

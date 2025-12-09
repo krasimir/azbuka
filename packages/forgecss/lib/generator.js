@@ -1,9 +1,9 @@
-import postcss from "postcss";
+
 import { writeFile } from "fs/promises";
 
 import { getUsages } from "./processor.js";
-import { getStylesByClassName } from "./inventory.js";
-import genericTransformer from "./transformers/generic.js";
+import mediaQueryTransformer from "./transformers/mediaQuery.js";
+import pseudoClassTransformer from "./transformers/pseudo.js";
 
 export async function generateOutputCSS(config) {
   const bucket = {};
@@ -11,11 +11,11 @@ export async function generateOutputCSS(config) {
   Object.keys(usages).map((file) => {
     Object.keys(usages[file]).forEach(async (label) => {
       try {
-        if (config?.mapping?.queries[label]) {
-          createMediaStyle(config, label, usages[file][label], bucket);
+        if (mediaQueryTransformer(config, label, usages[file][label], bucket)) {
+          return;
+        } else if (pseudoClassTransformer(label, usages[file][label], bucket)) {
           return;
         }
-        genericTransformer(label, usages[file][label], bucket);
       } catch (err) {
         console.error(
           `forgecss: Error generating media query for label "${label}" (found in file ${file.replace(
@@ -43,41 +43,3 @@ export async function generateOutputCSS(config) {
   return result;
 }
 
-function createMediaStyle(config, label, selectors, bucket) {
-  if (!config.mapping.queries[label]) {
-    return;
-  }
-  if (!bucket[label]) {
-    bucket[label] = {
-      rules: postcss.atRule({
-        name: "media",
-        params: `all and (${config.mapping.queries[label]})`
-      }),
-      classes: {}
-    };
-  }
-  const rules = bucket[label].rules;
-  selectors.forEach((selector) => {
-    const prefixedSelector = `.${label}_${selector}`;
-    if (bucket[label].classes[prefixedSelector]) {
-      return;
-    }
-    bucket[label].classes[prefixedSelector] = true;
-    const rule = postcss.rule({ selector: prefixedSelector });
-    const decls = getStylesByClassName(selector);
-    if (decls.length === 0) {
-      console.warn(`forgecss: no styles found for class ".${selector}" used in media query "${label}"`);
-      return;
-    }
-    decls.forEach((d) => {
-      rule.append(
-        postcss.decl({
-          prop: d.prop,
-          value: d.value,
-          important: d.important
-        })
-      );
-    });
-    rules.append(rule);
-  });
-}
