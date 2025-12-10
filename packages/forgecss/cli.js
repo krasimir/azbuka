@@ -13,7 +13,7 @@ program.option("-v, --verbose", "Enable watch mode", false);
 program.parse();
 
 const options = program.opts();
-let config = null;
+let config = null, instance = null;
 
 if (!fs.existsSync(options.config)) {
   throw new Error(`forgecss: Config file not found at ${options.config}. Check the --config option.`);
@@ -30,11 +30,15 @@ async function runForgeCSS(lookAtPath = null) {
   if (!config) {
     // The very first run
     config = await loadConfig(options.config);
+    if (!config.dir) {
+      throw new Error('forgecss: missing "dir" in configuration.');
+    }
+    if (!config.output) {
+      throw new Error('forgecss: missing "output" in configuration.');
+    }
+    instance = ForgeCSS(config);
     if (options.watch) {
-      if (!config.source) {
-        throw new Error('forgecss: missing "source" in configuration.');
-      }
-      const watcher = chokidar.watch(config.source, {
+      const watcher = chokidar.watch(config.dir, {
         persistent: true,
         ignoreInitial: true,
         ignored: (p, stats) => path.resolve(p) === path.resolve(config.output)
@@ -50,9 +54,13 @@ async function runForgeCSS(lookAtPath = null) {
       }
     }
   }
-  await ForgeCSS(config).parse(lookAtPath);
+  if (lookAtPath) {
+    instance.parseFile(lookAtPath, config.output);
+  } else {
+    instance.parseDirectory(config.dir, config.output);
+  }
   if (options.verbose) {
-    console.log(`forgecss: CSS generation at ${config.output} completed.`);
+    console.log(`forgecss: ${config.output} generated successfully.`);
   }
 }
 

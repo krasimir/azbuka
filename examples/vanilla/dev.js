@@ -11,16 +11,14 @@ const PORT = 5203;
 const app = express();
 
 ForgeCSS({
-  source: path.join(__dirname, "public"),
   mapping: {
     queries: {
       desktop: "min-width: 768px",
       mobile: "max-width: 768px"
     }
-  },
-  output: path.join(__dirname, "public/forgecss-output.css")
+  }
 })
-  .parse()
+  .parseDirectory(path.join(__dirname, "public"), path.join(__dirname, "public/forgecss-output.css"))
   .then(() => {
     console.log("ForgeCSS parsing completed.");
   });
