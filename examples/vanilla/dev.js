@@ -1,9 +1,12 @@
+import fs from "node:fs";
 import path from "path";
 import express from "express";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const fxCode = fs.readFileSync(path.join(__dirname, "../../packages/forgecss/dist/forgecss.min.js"), "utf-8");
 
 import ForgeCSS from '../../packages/forgecss/index.js';
 
@@ -25,7 +28,10 @@ ForgeCSS({
   .then(() => {
     console.log("ForgeCSS parsing completed.");
   });
-
+app.get("/forgecss.min.js", (req, res) => {
+  res.type("application/javascript");
+  res.send(fxCode);
+});
 app.use(express.static("public"));
 
 app.listen(PORT, () => {

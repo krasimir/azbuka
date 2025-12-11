@@ -5,6 +5,7 @@ import fx from '../../../packages/forgecss/fx'
 function App() {
   const [ progress, setProgress ] = useState(false);
   const [ success, setSuccess ] = useState(false);
+  const [theme, setTheme ] = useState<'light' | 'dark'>('dark');
   const [errors, setErrors ] = useState<{ username: boolean | string, password: boolean | string }>({ username: false, password: false });
 
   async function submit(e) {
@@ -20,9 +21,9 @@ function App() {
       setProgress(false);
       return;
     }
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setSuccess(true);
-    setProgress(false);
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
+    // setSuccess(true);
+    // setProgress(false);
   }
   function clearErrors(field: string) {
     setErrors((errors) => ({ ...errors, [field]: false }));
@@ -31,11 +32,11 @@ function App() {
   const isErrored = Boolean(errors.username || errors.password);
 
   return (
-    <main className={fx("p1")}>
+    <main className={fx(`p1 flex-col ${theme}`)}>
       <form onSubmit={submit} className={fx("fullw desktop:w400")}>
         <fieldset
           className={fx(
-            `background-light desktop:p2 no-border [${isErrored}?]:error-border [${success}?]:success-border`
+            `[.dark &]:background-light desktop:p2 no-border [${isErrored}?]:error-border [${success}?]:success-border`
           )}
         >
           {success ? (
@@ -73,7 +74,7 @@ function App() {
               </label>
               <button
                 type="submit"
-                className={fx("hover:primary2-bg disabled:op05 [&:disabled:hover]:primary-bg")}
+                className={fx("hover:primary2-bg [&:disabled]:op05 [&:disabled:hover]:primary-bg")}
                 disabled={progress}
               >
                 {progress ? "Logging in ... " : "Login"}
@@ -82,6 +83,16 @@ function App() {
           )}
         </fieldset>
       </form>
+      <div className={fx("flex gap1 mt1")}>
+        <label>
+          <input type="radio" name="theme" checked={theme === "dark"} onChange={() => setTheme("dark")} />
+          Dark theme
+        </label>
+        <label>
+          <input type="radio" name="theme" checked={theme === "light"} onChange={() => setTheme("light")} />
+          Light theme
+        </label>
+      </div>
     </main>
   );
 }

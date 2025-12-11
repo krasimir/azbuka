@@ -1,5 +1,7 @@
 import postcss from "postcss";
-import { getStylesByClassName } from "../inventory.js";
+
+import {setDeclarations} from "../helpers.js";
+import {normalizeLabel} from "../../client/fx.js";
 
 const ALLOWED_PSEUDO_CLASSES = [
   "hover",
@@ -27,7 +29,7 @@ const ALLOWED_PSEUDO_CLASSES = [
 export default function pseudoClassTransformer(label, selectors, bucket) {
   if (ALLOWED_PSEUDO_CLASSES.includes(label)) {
     selectors.forEach((selector) => {
-      const key = `${label}_${selector}`;
+      const key = normalizeLabel(label + ':' + selector);
       const transformedSelector = `.${key}:${label}`;
       const root = postcss.root();
       if (bucket[transformedSelector]) {
@@ -35,20 +37,7 @@ export default function pseudoClassTransformer(label, selectors, bucket) {
         return;
       }
       const rule = postcss.rule({ selector: transformedSelector });
-      const decls = getStylesByClassName(selector);
-      if (decls.length === 0) {
-        console.warn(`forgecss: no styles found for class ".${selector}" used in pseudo class "${label}"`);
-        return;
-      }
-      decls.forEach((d) => {
-        rule.append(
-          postcss.decl({
-            prop: d.prop,
-            value: d.value,
-            important: d.important
-          })
-        );
-      });
+      setDeclarations(selector, rule);
       root.append(rule);
       bucket[transformedSelector] = root;
     });

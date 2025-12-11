@@ -17,12 +17,18 @@
         width: auto
     }
 }
+..dark \[\.dark\ \&\]_background-light {
+    background-color: var(--background-light)
+}
 .disabled_op05:disabled {
     opacity: 0.5
 }
 .hover_primary2-bg:hover {
     background-color: var(--primary-color2)
 }
-.__disabled_hover_primary-bg:disabled:hover {
+.\[\&\:disabled\]_op05:disabled {
+    opacity: 0.5
+}
+.\[\&\:disabled\:hover\]_primary-bg:disabled:hover {
     background-color: var(--primary-color)
 }

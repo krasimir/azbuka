@@ -1,19 +1,20 @@
+export const SPLIT_CLASSES_REGEXP = /\s+(?![^\[]*\])/;
+
 export default function fx(classes) {
   return classes
-    .split(" ")
+    .split(SPLIT_CLASSES_REGEXP)
     .map((className) => {
       const [label, rest] = splitClassName(className);
-      if (!label || label === "[true?]") return rest;
-      if (label === "[false?]") return "";
-        return rest
-          .split(",")
-          .map((cls) => `${normalizeLabel(label)}_${cls}`)
-          .filter(Boolean)
-          .join(" ");
+      if (!label || label === "[true]") return rest;
+      if (label === "[false]") return null;
+      return rest
+        .split(",")
+        .map((cls) => `${label}:${cls}`)
+        .join(" ");
     })
     .filter(Boolean)
     .join(" ");
-};
+}
 export function splitClassName(label) {
   const lastColonIndex = label.lastIndexOf(":");
   if (lastColonIndex === -1) {
@@ -25,12 +26,7 @@ export function splitClassName(label) {
 }
 
 export function normalizeLabel(label) {
-  let normalized = label;
-  normalized = normalized.trim();
-  if (normalized.startsWith("[") && normalized.endsWith("]")) {
-    normalized = normalized.slice(1, -1);
-  }
-  normalized = normalized.replace(/[:|&|?]/g, "_");
+  let normalized = label.trim();
+  normalized = normalized.replace(/[^a-zA-Z0-9_-]/g, (m) => "\\" + m);
   return normalized;
 }
-
