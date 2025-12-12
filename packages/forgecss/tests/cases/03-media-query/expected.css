@@ -1,21 +1,21 @@
 @media all and ((min-width: 1024px)) {
-    .desktop-mt2 {
+    .desktop--mt2 {
         margin-top: 0.5rem
     }
-    .desktop-mt1 {
+    .desktop--mt1 {
         margin-top: 0.25rem
     }
 }
 @media all and ((max-width: 1023px)) {
-    .mobile-fz2 {
+    .mobile--fz2 {
         font-size: 2rem
     }
-    .mobile-red {
+    .mobile--red {
         color: red
     }
 }
 @media all and ((orientation: portrait)) {
-    .portrait-pt2 {
+    .portrait--pt2 {
         padding-top: 0.5rem
     }
 }

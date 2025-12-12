@@ -3,7 +3,7 @@ import postcss from "postcss";
 import { setDeclarations } from "../helpers.js";
 import {normalizeLabel} from "../../client/fx.js";
 
-export default function mediaQueryTransformer(config, label, selectors, bucket) {
+export default function mediaQueryTransformer(config, label, classes, bucket) {
   if (!config?.mapping?.queries[label]) {
     return false;
   }
@@ -17,14 +17,14 @@ export default function mediaQueryTransformer(config, label, selectors, bucket) 
     };
   }
   const rules = bucket[label].rules;
-  selectors.forEach((selector) => {
-    const prefixedSelector = `.${normalizeLabel(label + ':' + selector)}`;
-    if (bucket[label].classes[prefixedSelector]) {
+  classes.forEach((cls) => {
+    const selector = `.${normalizeLabel(label)}--${cls}`;
+    if (bucket[label].classes[selector]) {
       return;
     }
-    bucket[label].classes[prefixedSelector] = true; // caching
-    const rule = postcss.rule({ selector: prefixedSelector });
-    setDeclarations(selector, rule);
+    bucket[label].classes[selector] = true; // caching
+    const rule = postcss.rule({ selector });
+    setDeclarations(cls, rule);
     rules.append(rule);
   });
   return true;

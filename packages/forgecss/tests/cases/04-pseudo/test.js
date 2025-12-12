@@ -5,12 +5,12 @@ const CASES = [
   {
     styles: ".red { color: red }",
     usage: '<div class="hover:red"></div>',
-    expected: ".hover-red:hover{color:red}"
+    expected: ".hover--red:hover{color:red}"
   },
   {
     styles: ".red { color: red }.mt2 { margin-top: 2rem }",
-    usage: '<div class="focus:red active:mt2"></div>',
-    expected: ".focus-red:focus{color:red}.active-mt2:active{margin-top:2rem}"
+    usage: '<div class="focus:red,mt2 active:mt2"></div>',
+    expected: ".focus--red:focus{color:red}.focus--mt2:focus{margin-top:2rem}.active--mt2:active{margin-top:2rem}"
   }
 ];
 

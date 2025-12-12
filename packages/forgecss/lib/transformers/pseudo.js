@@ -26,20 +26,19 @@ const ALLOWED_PSEUDO_CLASSES = [
   "user-invalid"
 ];
 
-export default function pseudoClassTransformer(label, selectors, bucket) {
+export default function pseudoClassTransformer(label, classes, bucket) {
   if (ALLOWED_PSEUDO_CLASSES.includes(label)) {
-    selectors.forEach((selector) => {
-      const key = normalizeLabel(label + ':' + selector);
-      const transformedSelector = `.${key}:${label}`;
+    classes.forEach((cls) => {
+      const selector = `.${normalizeLabel(label)}--${cls}:${label}`;
       const root = postcss.root();
-      if (bucket[transformedSelector]) {
+      if (bucket[selector]) {
         // already have that
         return;
       }
-      const rule = postcss.rule({ selector: transformedSelector });
-      setDeclarations(selector, rule);
+      const rule = postcss.rule({ selector });
+      setDeclarations(cls, rule);
       root.append(rule);
-      bucket[transformedSelector] = root;
+      bucket[selector] = root;
     });
     return true;
   }
