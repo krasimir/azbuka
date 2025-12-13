@@ -3,8 +3,10 @@
   --primary-color2: #39e63f;
   --secondary-color: #8bcbe9;
   --background: #292929;
-  --background-light: #3a3a3a;
+  --surface: #525252;
+  --surface-light: #b9b9b9;
   --text: #f0f0f0;
+  --text-light: #000;
   --error: #dd6c6c;
 }
 * {
@@ -32,6 +34,7 @@ main {
 fieldset {
   min-width: 100%;
   filter: drop-shadow(0 0 0.75rem black);
+  background: #393939
 }
 input {
   padding: 0.5rem;
@@ -61,7 +64,9 @@ fieldset {
 .primary2-bg { background-color: var(--primary-color2); }
 .secondary { color: var(--secondary-color); }
 .secondary-bg { background-color: var(--secondary-color); }
-.background-light { background-color: var(--background-light); }
+.surface { background-color: var(--surface); }
+.surface-light { background-color: var(--surface-light); }
+.text-light { color: var(--text-light); }
 .error { color: var(--error); }
 .error-bg { background-color: var(--error); }
 .error-border { border: 2px solid var(--error); }

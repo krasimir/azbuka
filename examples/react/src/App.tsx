@@ -21,9 +21,9 @@ function App() {
       setProgress(false);
       return;
     }
-    // await new Promise((resolve) => setTimeout(resolve, 2000));
-    // setSuccess(true);
-    // setProgress(false);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    setSuccess(true);
+    setProgress(false);
   }
   function clearErrors(field: string) {
     setErrors((errors) => ({ ...errors, [field]: false }));
@@ -36,7 +36,12 @@ function App() {
       <form onSubmit={submit} className={fx("fullw desktop:w400")}>
         <fieldset
           className={fx(
-            `[.dark &]:background-light desktop:p2 no-border [${isErrored}]:error-border [${success}]:success-border`
+            `surface
+            [.light &]:surface-light,text-light
+            desktop:p2
+            no-border
+            [${isErrored}]:error-border
+            [${success}]:success-border`
           )}
         >
           {success ? (
@@ -45,7 +50,7 @@ function App() {
             <>
               <label className={fx("flex-col align-start desktop:flex-row,align-center gap1 space-between")}>
                 <span>Username:</span>
-                <div>
+                <div className={fx("fullw desktop:autow")}>
                   <input
                     type="text"
                     name="username"
@@ -60,7 +65,7 @@ function App() {
               </label>
               <label className={fx("flex-col align-start desktop:flex-row,align-center gap1 space-between")}>
                 <span>Password:</span>
-                <div>
+                <div className={fx("fullw desktop:autow")}>
                   <input
                     type="text"
                     name="password"
