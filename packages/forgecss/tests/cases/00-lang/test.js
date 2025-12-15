@@ -172,10 +172,11 @@ export default function test() {
     }
   ];
   // testing the parser
-  for (let testCase of parserCases) {
+  for (let i = 0; i < parserCases.length; i++) {
+    const testCase = parserCases[i];
     const result = parseClassValue(testCase.input);
     if (JSON.stringify(result) !== JSON.stringify(testCase.expected)) {
-      console.error("Test failed for input:", testCase.input);
+      console.error(`#${i+1} Test failed for input:`, testCase.input);
       console.error("Expected:", testCase.expected);
       console.error("Got     :", JSON.stringify(result, null, 2));
       return false;
@@ -189,16 +190,28 @@ export default function test() {
         .fz2 { font-size: 2rem }
       `,
       usage: "hover:mt1 fz2",
-      resolvedClasses: '',
-      expectedCSS: ``
+      classValue: "hover_mt1 fz2",
+      expectedCSS: `hover_mt1:hover{margin-top:1rem}`
     }
   ];
-  for (let testCase of compilerCases) {
+  for (let i=0; i<compilerCases.length; i++) {
+    const testCase = compilerCases[i];
     invalidateInvetory();
     extractStyles("test.css", testCase.styles);
     const ast = parseClassValue(testCase.usage);
     const result = compileClassAST(ast, getStylesByClassName);
-    console.log(result);
+    if (result.classValue !== testCase.classValue) {
+      console.error(`${i + 1}# Compiler Test failed (classValue):`);
+      console.error("Expected:\n", testCase.classValue);
+      console.error("Got:\n", result.classValue);
+      return false;
+    }
+    if (result.css !== testCase.expectedCSS) {
+      console.error(`${i + 1}# Compiler Test failed (expectedCSS):`);
+      console.error("Expected:\n", testCase.expectedCSS);
+      console.error("Got:\n", result.css);
+      return false;
+    }
   }
   return true;
 }
