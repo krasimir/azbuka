@@ -24,8 +24,14 @@ export function getStylesByClassName(selector) {
   }
   return decls;
 }
-export function invalidateInvetory() {
-  INVENTORY = {};
+export function invalidateInvetory(filePath) {
+  if (!filePath) {
+    INVENTORY = {};
+    return;
+  }
+  if (INVENTORY[filePath]) {
+    delete INVENTORY[filePath];
+  }
 }
 export function resolveApplys() {
   let resolvedApplies;
