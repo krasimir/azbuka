@@ -1,4 +1,4 @@
-import { invalidateInvetory } from "../../../lib/inventory.js";
+import { invalidateInventory } from "../../../lib/inventory.js";
 import { findUsages, getUsages, invalidateUsageCache } from "../../../lib/usages.js";
 import { getPath, expect } from "../../helpers.js";
 
@@ -33,7 +33,7 @@ export default async function test() {
   for (let i=0; i<cases.length; i++) {
     const { file, expected } = cases[i];
     invalidateUsageCache();
-    invalidateInvetory();
+    invalidateInventory();
     await findUsages(file);
     if (!expect.deepEqual(getUsages(), expected)) {
       return false;

@@ -24,7 +24,7 @@ export function getStylesByClassName(selector) {
   }
   return decls;
 }
-export function invalidateInvetory(filePath) {
+export function invalidateInventory(filePath) {
   if (!filePath) {
     INVENTORY = {};
     return;

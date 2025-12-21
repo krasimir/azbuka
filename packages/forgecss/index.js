@@ -2,7 +2,7 @@ import path from 'path';
 import { writeFile } from "fs/promises";
 import chokidar from "chokidar";
 
-import { extractStyles, getStylesByClassName, invalidateInvetory, resolveApplys } from "./lib/inventory.js";
+import { extractStyles, getStylesByClassName, invalidateInventory, resolveApplys } from "./lib/inventory.js";
 import { invalidateUsageCache, findUsages, getUsages } from "./lib/usages.js";
 import { astToRules, rulesToCSS } from './lib/forge-lang/Compiler.js';
 import { toAST } from './lib/forge-lang/Parser.js';
@@ -64,6 +64,7 @@ export default function ForgeCSS(options) {
     watcher.on("change", async (filePath) => {
       if (config.verbose) {
         invalidateUsageCache(filePath)
+        invalidateInventory(filePath);
         console.log(`forgecss: Detected change in ${filePath}`);
       }
       callback();
@@ -137,7 +138,7 @@ export default function ForgeCSS(options) {
       if (!html && !jsx) {
         throw new Error('forgecss: parse requires "html" or "jsx".');
       }
-      invalidateInvetory();
+      invalidateInventory();
       invalidateUsageCache();
       // filling the inventory
       try {
