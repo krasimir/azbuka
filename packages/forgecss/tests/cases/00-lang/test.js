@@ -1,16 +1,16 @@
 import { parseClassValue } from "../../../lib/forge-lang/Parser.js";
 import { compileAST } from "../../../lib/forge-lang/Compiler.js";
-import { invalidateInvetory } from "../../../lib/inventory.js";
+import fx from '../../../client/fx.js'
 
 const mockGetStyleByClassName = (_) => [{ prop: "foo", value: "bar", important: false }];
 
 export default function test() {
   const parserCases = [
     {
-      input: 'btn primary hover:red',
+      input: "btn primary hover:red",
       expected: [
-        { type: 'token', value: 'btn' },
-        { type: 'token', value: 'primary' },
+        { type: "token", value: "btn" },
+        { type: "token", value: "primary" },
         {
           type: "variant",
           selector: "hover",
@@ -22,19 +22,28 @@ export default function test() {
       ]
     },
     {
-      input: 'text [.dark &]:text-white mt1',
+      input: "text [.dark &]:text-white mt1",
       expected: [
-        { type: 'token', value: 'text' },
+        { type: "token", value: "text" },
         {
-          type: 'variant',
-          selector: '.dark &',
-          payload: { type: 'token', value: 'text-white' }
+          type: "variant",
+          selector: [
+            {
+              type: "token",
+              value: ".dark"
+            },
+            {
+              type: "token",
+              value: "&"
+            }
+          ],
+          payload: { type: "token", value: "text-white" }
         },
-        { type: 'token', value: 'mt1' }
+        { type: "token", value: "mt1" }
       ]
     },
     {
-      input: 'foo layout(px4 rounded)',
+      input: "foo layout(px4 rounded)",
       expected: [
         {
           type: "token",
@@ -57,13 +66,84 @@ export default function test() {
       ]
     },
     {
+      input: "disabled:opacity-50 desktop:layout(px6 py3)",
+      expected: [
+        {
+          type: "variant",
+          selector: "disabled",
+          payload: {
+            type: "token",
+            value: "opacity-50"
+          }
+        },
+        {
+          type: "variant",
+          selector: "desktop",
+          payload: {
+            type: "call",
+            name: "layout",
+            args: [
+              {
+                type: "token",
+                value: "px6"
+              },
+              {
+                type: "token",
+                value: "py3"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      input: "[.dark &[type='password']]:bg-black",
+      expected: [
+        {
+          type: "variant",
+          selector: [
+            {
+              type: "token",
+              value: ".dark"
+            },
+            {
+              type: "token",
+              value: "&[type='password']"
+            }
+          ],
+          payload: {
+            type: "token",
+            value: "bg-black"
+          }
+        }
+      ]
+    },
+    {
+      input: `[&:has(.desc[title="a[b] c"])]:text(underline)`,
+      expected: [
+        {
+          type: "variant",
+          selector: [
+            {
+              type: "token",
+              value: '&:has(.desc[title="a[b] c"])'
+            }
+          ],
+          payload: {
+            type: "call",
+            name: "text",
+            args: [
+              {
+                type: "token",
+                value: "underline"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
       input: `
-        btn
-        text(text-sm font-semibold)
-        disabled:opacity-50
-        desktop:layout(px6 py3)
-        [.dark &[type='password']]:bg-black
-        [&:has(.desc[title="a[b] c"])]:text(underline)
         theme(
           [.dark &]:text(text-white),
           hover:layout(bg-blue-700),
@@ -71,99 +151,42 @@ export default function test() {
       `,
       expected: [
         {
-          "type": "token",
-          "value": "btn"
-        },
-        {
-          "type": "call",
-          "name": "text",
-          "args": [
+          type: "call",
+          name: "theme",
+          args: [
             {
-              "type": "token",
-              "value": "text-sm"
-            },
-            {
-              "type": "token",
-              "value": "font-semibold"
-            }
-          ]
-        },
-        {
-          "type": "variant",
-          "selector": "disabled",
-          "payload": {
-            "type": "token",
-            "value": "opacity-50"
-          }
-        },
-        {
-          "type": "variant",
-          "selector": "desktop",
-          "payload": {
-            "type": "call",
-            "name": "layout",
-            "args": [
-              {
-                "type": "token",
-                "value": "px6"
-              },
-              {
-                "type": "token",
-                "value": "py3"
-              }
-            ]
-          }
-        },
-        {
-          "type": "variant",
-          "selector": ".dark &[type='password']",
-          "payload": {
-            "type": "token",
-            "value": "bg-black"
-          }
-        },
-        {
-          "type": "variant",
-          "selector": "&:has(.desc[title=\"a[b] c\"])",
-          "payload": {
-            "type": "call",
-            "name": "text",
-            "args": [
-              {
-                "type": "token",
-                "value": "underline"
-              }
-            ]
-          }
-        },
-        {
-          "type": "call",
-          "name": "theme",
-          "args": [
-            {
-              "type": "variant",
-              "selector": ".dark &",
-              "payload": {
-                "type": "call",
-                "name": "text",
-                "args": [
+              type: "variant",
+              selector: [
+                {
+                  type: "token",
+                  value: ".dark"
+                },
+                {
+                  type: "token",
+                  value: "&"
+                }
+              ],
+              payload: {
+                type: "call",
+                name: "text",
+                args: [
                   {
-                    "type": "token",
-                    "value": "text-white"
+                    type: "token",
+                    value: "text-white"
                   }
                 ]
               }
             },
             {
-              "type": "variant",
-              "selector": "hover",
-              "payload": {
-                "type": "call",
-                "name": "layout",
-                "args": [
+              type: "variant",
+              selector: "hover",
+              payload: {
+                type: "call",
+                name: "layout",
+                args: [
                   {
-                    "type": "token",
-                    "value": "bg-blue-700"
+                    type: "token",
+                    value: "bg-blue-700"
                   }
                 ]
               }
@@ -184,22 +207,34 @@ export default function test() {
       return false;
     }
   }
+
   // testing the compiler
   const compilerCases = [
-    // {
-    //   usage: "hover:mt1 fz2 active:mt1,fz2,fz3",
-    //   classValue: "hover_mt1 fz2 active_mt1 active_fz2 active_fz3",
-    //   expectedCSS: "hover_mt1:hover{foo:bar}active_mt1:active{foo:bar}active_fz2:active{foo:bar}active_fz3:active{foo:bar}"
-    // },
     {
-      usage: "desktop:mt1 fz2 ",
-      classValue: "desktop_mt1 fz2",
-      expectedCSS: "@media all and (min-width:1024px){desktop_mt1{foo:bar}}"
+      usage: ["hover:mt1 fz2 active:mt1,fz2,fz3"],
+      classStr: ["hover_mt1 fz2 active_mt1 active_fz2 active_fz3"],
+      expectedCSS:
+        "hover_mt1:hover{foo:bar}active_mt1:active{foo:bar}active_fz2:active{foo:bar}active_fz3:active{foo:bar}"
+    },
+    {
+      usage: ["desktop:mt1 fz2 desktop:p1", "mt2 pt1 desktop:mt1,fz3 fz2", "mobile:br-l"],
+      classStr: ["desktop_mt1 fz2 desktop_p1", "mt2 pt1 desktop_mt1 desktop_fz3 fz2", "mobile_br-l"],
+      expectedCSS:
+        "@media all and (min-width:1024px){desktop_mt1{foo:bar}desktop_p1{foo:bar}desktop_fz3{foo:bar}}@media all and (max-width:1023px){mobile_br-l{foo:bar}}"
+    },
+    {
+      usage: ["[&:hover]:red,fz2 mt1", "[.dark &]:b"],
+      classStr: ["I-hover_red I-hover_fz2 mt1", "dark-I_b"],
+      expectedCSS: ".I-hover_red:hover{foo:bar}.I-hover_fz2:hover{foo:bar}.dark .dark-I_b{foo:bar}"
+    },
+    {
+      usage: ["desktop:[.dark &]:b desktop:mt1,p1"],
+      classStr: ["desktop-dark-I_b desktop_mt1 desktop_p1"],
+      expectedCSS: "@media all and (min-width:1024px){.dark .dark-I_b{foo:bar}desktop_mt1{foo:bar}desktop_p1{foo:bar}}"
     }
   ];
   for (let i=0; i<compilerCases.length; i++) {
     const testCase = compilerCases[i];
-    invalidateInvetory();
     const ast = parseClassValue(testCase.usage);
     const result = compileAST(ast, {
       getStylesByClassName: mockGetStyleByClassName,
@@ -209,14 +244,20 @@ export default function test() {
         portrait: "(orientation: portrait)"
       }
     });
-    if (result.classes.join(' ') !== testCase.classValue) {
-      console.error(`${i + 1}# Compiler Test failed (classValue):`);
-      console.error("Expected:\n", testCase.classValue);
-      console.error("Got:\n", result.classes.join(" "));
+    let usages = testCase.usage;
+    if (!usages.every((usage, i) => {
+      if (fx(usage) !== testCase.classStr[i]) {
+        console.error(`#${i} Compiler Test failed (classStr):`);
+        console.error("Expected:\n", testCase.classStr[i]);
+        console.error("Got:\n", fx(usage));
+        return false;
+      }
+      return true;
+    })) {
       return false;
     }
     if (result.css !== testCase.expectedCSS) {
-      console.error(`${i + 1}# Compiler Test failed (expectedCSS):`);
+      console.error(`#${i} Compiler Test failed (expectedCSS):`);
       console.error("Expected:\n", testCase.expectedCSS);
       console.error("Got:\n", result.css);
       return false;

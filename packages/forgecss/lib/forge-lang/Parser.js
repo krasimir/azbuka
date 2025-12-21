@@ -1,4 +1,19 @@
-export function parseClassValue(input) {
+export function parseClassValue(input, cache = {}) {
+  if (cache[input]) return cache[input];
+
+  if (Array.isArray(input)) {
+    const optimized = [];
+    input.forEach((str) => {
+      str
+        .trim()
+        .split(" ")
+        .forEach((part) => {
+          if (!optimized.includes(part)) optimized.push(part);
+        });
+    });
+    input = optimized.join(" ");
+  }
+
   const s = String(input ?? "").trim();
   let i = 0;
 
@@ -23,9 +38,13 @@ export function parseClassValue(input) {
     let out = "";
     while (i < s.length) {
       const ch = s[i];
-      // stop at whitespace, "(", ")", or ":" (variant label separator)
+      // stop at whitespace, "(", ")", ":" (variant separator)
       if (isWS(ch) || ch === "(" || ch === ")" || ch === ":") break;
+      // IMPORTANT: DO NOT consume "[" here; it may be:
+      //  - leading bracket variant (handled in parseItem when ch === "[")
+      //  - attribute selector suffix (handled in parseItem after reading head)
       if (ch === "[") break;
+
       out += ch;
       i++;
     }
@@ -33,7 +52,10 @@ export function parseClassValue(input) {
   }
 
   function isVariantLabel(str) {
-    // keep it strict so random garbage doesn't become a variant
+    return /^[A-Za-z_][A-Za-z0-9_-]*$/.test(str);
+  }
+
+  function isCallName(str) {
     return /^[A-Za-z_][A-Za-z0-9_-]*$/.test(str);
   }
 
@@ -43,22 +65,34 @@ export function parseClassValue(input) {
 
     // Bracket variant: [selector]:payload
     if (ch === "[") {
-      const selector = parseBracketContent();
+      const selectorRaw = parseBracketContent(); // returns content WITHOUT outer []
+      const selectorAst = parseClassValue(selectorRaw, cache);
+
       if (s[i] === ":") {
         i++;
         const payload = parseItem();
-        return { type: "variant", selector, payload };
+        return { type: "variant", selector: selectorAst, payload };
       }
-      return { type: "token", value: `[${selector}]` };
+
+      // If it's just a standalone bracket chunk (not a variant),
+      // keep it as a token string. (You can change this if you prefer AST here.)
+      return { type: "token", value: `[${selectorRaw}]` };
     }
 
-    // Read label/name/token (stops before ":" and "(" now)
-    const head = readIdentUntilDelimiter();
+    // Read label/name/token
+    let head = readIdentUntilDelimiter();
+
+    // NEW: absorb attribute selector suffixes: foo[...][...]
+    // This handles &\[type=...\] and similar.
+    while (s[i] === "[") {
+      const inner = parseBracketContent(); // consumes the bracket block
+      head += `[${inner}]`;
+    }
 
     // Label variant: hover:..., desktop:..., focus:...
     if (s[i] === ":" && isVariantLabel(head)) {
       i++; // consume ":"
-      const payload = parseItem(); // can be token/call/[...]:...
+      const payload = parseItem();
       return { type: "variant", selector: head, payload };
     }
 
@@ -79,10 +113,40 @@ export function parseClassValue(input) {
       return { type: "call", name: head, args };
     }
 
+    if (s[i] === ":") {
+      head += ":";
+      i++; // consume ":"
+
+      // absorb following identifier / call / selector chunk
+      while (i < s.length) {
+        const ch = s[i];
+        if (isWS(ch) || ch === ")" || ch === ",") break;
+
+        if (ch === "[") {
+          const inner = parseBracketContent();
+          head += `[${inner}]`;
+          continue;
+        }
+
+        if (ch === "(") {
+          head += "(";
+          i++;
+          let depth = 1;
+          while (i < s.length && depth > 0) {
+            if (s[i] === "(") depth++;
+            if (s[i] === ")") depth--;
+            head += s[i++];
+          }
+          continue;
+        }
+
+        head += ch;
+        i++;
+      }
+    }
+
     return { type: "token", value: head };
   }
-
-
 
   function parseBracketContent() {
     // assumes s[i] === "["
@@ -138,12 +202,7 @@ export function parseClassValue(input) {
     return out;
   }
 
-  function isCallName(str) {
-    // Allow: layout, text, hover, focus_ring, darkMode, etc.
-    // Disallow tokens like "mt-2" accidentally becoming calls.
-    return /^[A-Za-z_][A-Za-z0-9_-]*$/.test(str);
-  }
-
   const ast = parseSequence(null);
+  cache[input] = ast;
   return ast;
 }

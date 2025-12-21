@@ -1,65 +1,124 @@
 import postcss from "postcss";
 import { NODE_TYPE, ALLOWED_PSEUDO_CLASSES } from "./constants.js";
 import { minifyCSS } from './utils.js'
+import { normalizeLabel } from "../../client/fx.js";
 
-export function compileAST(ast, { getStylesByClassName, breakpoints }) {
-  let classes = [];
+export function compileAST(ast, options) {
   let rules = [];
-  console.log(ast);
+  const { getStylesByClassName, breakpoints, cache = {} } = options
+  console.log(JSON.stringify(ast, null, 2));
 
   for(let node of ast) {
-    switch(node.type) {
+    switch (node.type) {
       case NODE_TYPE.TOKEN:
-        classes.push(node.value)
-      break;
+        // ignoring ... just tokens
+        break;
       case NODE_TYPE.VARIANT:
-        const variant = node.selector;
-        node.payload.value.split(',').map(c => c.trim()).filter(Boolean).forEach(cls => {
-          const selector = `${variant}_${cls}`;
-          classes.push(selector);
-          if (ALLOWED_PSEUDO_CLASSES.includes(variant)) {
-            rules.push(createRule(`${selector}:${variant}`, cls));
-          } else if (breakpoints[variant]) {
-            const mediaRule = postcss.atRule({
+        let variantSelector = node.selector;
+        let classes = (node?.payload?.value ?? "").split(",").map((c) => c.trim()).filter(Boolean);
+        let childRules;
+        if (!node.payload.value && typeof node.payload === 'object') {
+          const result = compileAST([node.payload], options);
+          childRules = result.rules;
+        }
+
+        // -------------------------------------------------------- pseudo
+        if (ALLOWED_PSEUDO_CLASSES.includes(variantSelector)) {
+          classes.forEach(cls => {
+            let selector = `${variantSelector}_${cls}`;
+            const rule = createRule(`${selector}:${variantSelector}`, cls, cache);
+            if (rule) {
+              rules.push(rule);
+            }
+          });
+        // -------------------------------------------------------- media queries
+        } else if (breakpoints[variantSelector]) {
+          let mediaRule;
+          if (cache[breakpoints[variantSelector]]) {
+            mediaRule = cache[breakpoints[variantSelector]];
+          } else {
+            mediaRule = cache[breakpoints[variantSelector]] = postcss.atRule({
               name: "media",
-              params: `all and ${breakpoints[variant]}`
+              params: `all and ${breakpoints[variantSelector]}`
             });
-            mediaRule.append(createRule(selector, cls));
-            rules.push(mediaRule)
+            rules.push(mediaRule);
           }
-        })
-      break;
+          if (childRules) {
+            childRules.forEach(r => {
+              mediaRule.append(r);
+            })
+          } else {
+            classes.forEach((cls) => {
+              let selector = `${variantSelector}_${cls}`;
+              const rule = createRule(selector, cls, cache);
+              if (rule) {
+                mediaRule.append(rule);
+              }
+            });
+          }
+        // -------------------------------------------------------- arbitrary
+        } else {
+          classes.forEach(cls => {
+            if (Array.isArray(variantSelector)) {
+              variantSelector = variantSelector
+                .map(({ type, value, selector, payload }) => {
+                  if (type === "token") {
+                    return value;
+                  }
+                })
+                .filter(Boolean)
+                .join(" ");
+            }
+            if (["", "true"].includes(variantSelector)) {
+              return;
+            }
+            const I = normalizeLabel(variantSelector) + "_" + cls;
+            const selector = evaluateArbitrary(variantSelector, I);
+            const rule = createRule(selector, cls, cache);
+            if (rule) {
+              rules.push(rule);
+            }
+          })
+        }
+        break;
     }
   }
 
   return {
-    classes,
     rules,
     css: minifyCSS(rules.map((r) => r.toString()).join(""))
   };
 
-  function createRule(selector, pickStylesFrom) {
-    pickStylesFrom = pickStylesFrom.split(',').map(c => c.trim()).filter(Boolean);
-    const newRule = postcss.rule({ selector: selector });
-    pickStylesFrom.forEach((className) => {
-      const styles = getStylesByClassName(className);
-      styles.forEach((style) => {
-        newRule.append({
-          prop: style.prop,
-          value: style.value,
-          important: style.important
-        });
-      });
-    });
+  function createRule(selector, pickStylesFrom, cache = {}) {
+    if (cache[selector]) {
+      return;
+    }
+    pickStylesFrom = pickStylesFrom.split(",").map((c) => c.trim()).filter(Boolean);
+    if (pickStylesFrom.length === 0) {
+      return;
+    }
+    const newRule = cache[selector] = postcss.rule({ selector });
+    pickStylesFrom.forEach((className) => setDeclarations(className, newRule));
     return newRule;
   }
-}
-
-function generateClass(node) {
-  if (node.type === NODE_TYPE.VARIANT) {
-    return `${node.selector.replace(/[: ]/g, '_')}${generateClass(node.payload)}`;
-  } else if (node.type === NODE_TYPE.TOKEN) {
-    return `_${node.value.replace(/[,]/g, '-')}`;
+  function setDeclarations(selector, rule) {
+    const decls = getStylesByClassName(selector);
+    if (decls.length === 0) {
+      console.warn(`forgecss: no class ".${selector}" found`);
+      return;
+    }
+    decls.forEach((d) => {
+      rule.append(
+        postcss.decl({
+          prop: d.prop,
+          value: d.value,
+          important: d.important
+        })
+      );
+    });
   }
-  return '----';
+  function evaluateArbitrary(variant, I) {
+    variant = variant.replace(/[&]/g, `.${I}`);
+    return variant;
+  }
 }

@@ -6,7 +6,7 @@ export default function fx(classes) {
       label = normalizeLabel(label);
       return rest
         .split(",")
-        .map((cls) => `${label}--${cls}`)
+        .map((cls) => `${label}_${cls}`)
         .join(" ");
     })
     .filter(Boolean)
