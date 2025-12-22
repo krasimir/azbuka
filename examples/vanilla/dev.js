@@ -7,7 +7,7 @@ import ForgeCSS from "../../packages/forgecss/index.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const fxCode = fs.readFileSync(path.join(__dirname, "../../packages/forgecss/dist/forgecss.min.js"), "utf-8");
+const fxCode = fs.readFileSync(path.join(__dirname, "../../packages/forgecss/dist/client.min.js"), "utf-8");
 
 const PORT = 5173;
 const app = express();
