@@ -79,10 +79,40 @@ function ForgeCSS(options) {
       }
       return result();
     },
+    fxAll: function (root) {
+      const rootNode = root || document;
+      const nodes = rootNode.querySelectorAll("[class]");
+
+      for (let i = 0; i < nodes.length; i++) {
+        let el = nodes[i];
+        let original = el.getAttribute("class");
+        if (!original) continue;
+
+        let transformed = fx(original);
+
+        if (typeof transformed === "string" && transformed !== original) {
+          el.setAttribute("class", transformed);
+        }
+      }
+    },
+    getPageCSS() {
+      let css = "";
+      for (const sheet of document.styleSheets) {
+        try {
+          for (const rule of sheet.cssRules) {
+            css += rule.cssText + "\n";
+          }
+        } catch {}
+      }
+      return css;
+    },
+    getPageHTML() {
+      return document.body.outerHTML;
+    },
+    fx,
     getUsages,
     getStylesByClassName,
-    getInventory,
-    fx
+    getInventory
   };
 }
 

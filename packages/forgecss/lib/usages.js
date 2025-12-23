@@ -1,7 +1,3 @@
-import { fromHtml } from "hast-util-from-html";
-import { visit } from "unist-util-visit";
-
-
 let USAGES = {};
 
 export async function findUsages(filePath, content, JSXParser) {
@@ -15,11 +11,8 @@ export async function findUsages(filePath, content, JSXParser) {
 
     // HTML
     if (extension === "html") {
-      const ast = fromHtml(content);
-      visit(ast, "element", (node) => {
-        if (node.properties.className) {
-          USAGES[filePath].push(node.properties.className.join(" "));
-        }
+      extractClassNamesFromHTML(content).forEach((cls) => {
+        USAGES[filePath].push(cls);
       });
       return;
     }
@@ -42,4 +35,16 @@ export function invalidateUsageCache(filePath) {
 }
 export function getUsages() {
   return USAGES;
+}
+
+function extractClassNamesFromHTML(html) {
+  const result = [];
+  const classAttrRE = /\bclass\s*=\s*(["'])(.*?)\1/gis;
+
+  let match;
+  while ((match = classAttrRE.exec(html))) {
+    result.push(match[2].trim());
+  }
+
+  return result;
 }

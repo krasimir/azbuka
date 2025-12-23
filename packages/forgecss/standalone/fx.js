@@ -1,9 +1,7 @@
 import fxFn from "../lib/fx.js";
 
-function forgecss(root) {
+function fxAll(root) {
   var rootNode = root || document;
-
-  // Query only nodes that actually have "class" attributes
   var nodes = rootNode.querySelectorAll('[class]');
 
   for (var i = 0; i < nodes.length; i++) {
@@ -19,16 +17,20 @@ function forgecss(root) {
   }
 }
 
-window.fx = fxFn;
-window.forgecss = forgecss;
+window.fx = function(str) {
+  if (str) {
+    return fxFn(str);
+  }
+  return fxAll();
+};
 
 if (document.readyState !== 'loading') {
-  forgecss();
+  fxAll();
 } else {
   document.addEventListener('DOMContentLoaded', function () {
-    forgecss();
+    fxAll();
   });
 }
 window.addEventListener('load', function () {
-  forgecss();
+  fxAll();
 });
