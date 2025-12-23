@@ -79,6 +79,12 @@ export function Editor({ language, code, className, onChange, readonly }: Editor
     }
   }, [monacoEl.current]);
 
+  useEffect(() => {
+    if (editor && editor.getValue() !== code) {
+      editor.setValue(code);
+    }
+  }, [code])
+
   return (
     <div className={`p1 editor-wrapper ${className ?? ''}`}>
       <div className="editor" ref={monacoEl}></div>

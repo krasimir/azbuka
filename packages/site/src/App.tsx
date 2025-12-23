@@ -87,7 +87,6 @@ function App() {
                 language={selectedOutput.type}
                 className="flex1"
                 readonly
-                key={selectedOutput.content}
               />
             </div>
           </div>

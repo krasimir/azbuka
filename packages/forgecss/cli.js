@@ -8,7 +8,7 @@ import chokidar from "chokidar";
 
 import ForgeCSS from './index.js';
 
-program.option("-c, --config <string>,", "Path to forgecss config file", process.cwd() + "/forgecss.config.js");
+program.option("-c, --config <string>,", "Path to forgecss config file", process.cwd() + "/forgecss.config.json");
 program.option("-w, --watch", "Enable watch mode", false);
 program.option("-v, --verbose", "Enable watch mode", false);
 program.parse();
@@ -22,10 +22,12 @@ if (!fs.existsSync(options.config)) {
 
 async function loadConfig(configPath) {
   const abs = path.resolve(configPath);
-  const fileUrl = pathToFileURL(abs).href;
-
-  const mod = await import(fileUrl);
-  return mod.default ?? mod;
+  const jsonStr = fs.readFileSync(abs, "utf-8");
+  try {
+    return JSON.parse(jsonStr);
+  } catch(err) {
+    throw new Error(`forgecss: error parsing config file at ${configPath}: ${err}`);
+  }
 }
 async function runForgeCSS(lookAtPath = null) {
   if (!config) {
