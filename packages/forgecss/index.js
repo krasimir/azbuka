@@ -47,7 +47,7 @@ export default function ForgeCSS(options) {
         await writeFile(output, `/* ForgeCSS auto-generated file */\n${css}`, "utf-8");
       }
       if (config.verbose) {
-        console.log("forgecss: Output CSS generated successfully.");
+        console.log("forgecss: output CSS generated successfully.");
       }
       return css;
     } catch (err) {

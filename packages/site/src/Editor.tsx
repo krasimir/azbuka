@@ -51,7 +51,7 @@ export function Editor({ language, code, className, onChange, readonly }: Editor
           lineDecorationsWidth: 0,
           lineNumbersMinChars: 0,
           scrollbar: {
-            vertical: "hidden",
+            vertical: "auto",
             horizontal: "hidden"
           },
           overviewRulerLanes: 0,
@@ -80,10 +80,15 @@ export function Editor({ language, code, className, onChange, readonly }: Editor
   }, [monacoEl.current]);
 
   useEffect(() => {
-    if (editor && editor.getValue() !== code) {
+    if (!editor) return;
+    if (editor.getValue() !== code) {
       editor.setValue(code);
     }
-  }, [code])
+    const model = editor.getModel();
+    if (model) {
+      monaco.editor.setModelLanguage(model, language);
+    }
+  }, [code, language])
 
   return (
     <div className={`p1 editor-wrapper ${className ?? ''}`}>

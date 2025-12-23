@@ -42,7 +42,7 @@ function ForgeCSS(options) {
       rules.push(resolveApplys());
       const css = rulesToCSS(rules.filter(Boolean), config);
       if (config.verbose) {
-        console.log("forgecss: Output CSS generated successfully.");
+        console.log("forgecss: output CSS generated successfully.");
       }
       return css;
     } catch (err) {

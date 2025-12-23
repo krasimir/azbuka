@@ -31,17 +31,16 @@ export const DEFAULT_FILES = [
     type: "javascript"
   }
 ];
-export const DEFAULT_OUTPUT_FILES = [
-  {
-    filename: "page.html",
-    content: "",
-    selected: false,
-    type: "html"
-  },
-  {
-    filename: "forgecss.css",
-    content: "",
-    selected: true,
-    type: "css"
-  }
-];
+export const ACTUAL_HTML_FILE = {
+  filename: "page.html",
+  content: "",
+  selected: false,
+  type: "html"
+};
+export const TOTAL_CSS_FILE = {
+  filename: "forgecss.css",
+  content: "",
+  selected: true,
+  type: "css"
+};
+export const DEFAULT_OUTPUT_FILES = [ACTUAL_HTML_FILE, TOTAL_CSS_FILE];

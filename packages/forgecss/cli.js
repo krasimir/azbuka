@@ -8,7 +8,13 @@ import chokidar from "chokidar";
 
 import ForgeCSS from './index.js';
 
-program.option("-c, --config <string>,", "Path to forgecss config file", process.cwd() + "/forgecss.config.json");
+const POSSIBLE_CONFIG_FILES = [
+  process.cwd() + "/forgecss.config.json",
+  process.cwd() + "/forgecss.config.js",
+  process.cwd() + "/forgecss.config.mjs"
+];
+
+program.option("-c, --config <string>,", "Path to forgecss config file", POSSIBLE_CONFIG_FILES[0]);
 program.option("-w, --watch", "Enable watch mode", false);
 program.option("-v, --verbose", "Enable watch mode", false);
 program.parse();
@@ -17,16 +23,37 @@ const options = program.opts();
 let config = null, instance = null;
 
 if (!fs.existsSync(options.config)) {
-  throw new Error(`forgecss: Config file not found at ${options.config}. Check the --config option.`);
+  let found = false;
+  for (let possibleConfigFile of POSSIBLE_CONFIG_FILES) {
+    if (fs.existsSync(possibleConfigFile)) {
+      options.config = possibleConfigFile;
+      found = true;
+      break;
+    }
+  }
+  if (!found) {
+    throw new Error(`forgecss: config file not found at ${options.config} or any of the default locations.`);
+  }
 }
 
 async function loadConfig(configPath) {
   const abs = path.resolve(configPath);
-  const jsonStr = fs.readFileSync(abs, "utf-8");
-  try {
-    return JSON.parse(jsonStr);
-  } catch(err) {
-    throw new Error(`forgecss: error parsing config file at ${configPath}: ${err}`);
+  if (abs.toLowerCase().endsWith('.json')) {
+    const jsonStr = fs.readFileSync(abs, "utf-8");
+    if (options.verbose) {
+      console.log(`forgecss: Loaded config file from ${abs.replace(process.cwd(), '')}`);
+    }
+    try {
+      return JSON.parse(jsonStr);
+    } catch(err) {
+      throw new Error(`forgecss: error parsing config file at ${configPath}: ${err}`);
+    }
+  } else {
+    const module = await import(pathToFileURL(abs).href);
+    if (options.verbose) {
+      console.log(`forgecss: Loaded config file from ${abs.replace(process.cwd(), '')}`);
+    }
+    return module.default || module;
   }
 }
 async function runForgeCSS(lookAtPath = null) {
@@ -61,9 +88,6 @@ async function runForgeCSS(lookAtPath = null) {
     instance.parseFile({ file: lookAtPath, output: config.output });
   } else {
     instance.parseDirectory({ dir: config.dir, output: config.output });
-  }
-  if (options.verbose) {
-    console.log(`forgecss: ${config.output} generated successfully.`);
   }
 }
 

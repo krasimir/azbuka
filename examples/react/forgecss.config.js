@@ -1,4 +1,4 @@
-{
+export default {
   "dir": "./src",
   "output": "./src/forgecss.css",
   "breakpoints": {

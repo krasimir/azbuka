@@ -1,17 +1,27 @@
 /* ForgeCSS auto-generated file */
 @media all and (min-width: 900px) {
-    .desktop_mt1 {
-        margin-top: 1rem
+    .desktop_py3 {
+        padding-top: 3rem;
+        padding-bottom: 3rem
     }
     .desktop_grid2 {
         display: grid;
         grid-template-columns: 1fr 1fr
     }
-    .desktop_p3 {
-        padding: 3rem
+    .desktop_pt3 {
+        padding-top: 3rem
+    }
+    .desktop_pl3 {
+        padding-left: 3rem
+    }
+    .desktop_pr3 {
+        padding-right: 3rem
     }
 }
 @media all and (max-width: 899px) {
+    .mobile_hidden {
+        display: none
+    }
     .mobile_mt1 {
         margin-top: 1rem
     }
