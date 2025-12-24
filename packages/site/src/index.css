@@ -1,10 +1,14 @@
 :root {
+  --background-dark: #1b1b1b;
   --background: #292929;
   --background-light: #595959;
   --background-light2: #7b7b7b;
   --text: #f0f0f0;
   --warning: #df6464;
   --success: #61e481;
+  --bit1: #8ff08f;
+  --bit2: #e65f5f;
+  --bit3: #909eee;
 }
 * {
   box-sizing: border-box;
@@ -42,6 +46,7 @@ h1, h2, h3 {
 .p2 { padding: 2rem; }
 .p3 { padding: 3rem; }
 .pt2 { padding-top: 2rem; }
+.pl1 { padding-left: 1rem; }
 .py1 { padding-top: 1rem; padding-bottom: 1rem; }
 .py2 { padding-top: 2rem; padding-bottom: 2rem; }
 .py3 { padding-top: 3rem; padding-bottom: 3rem; }
@@ -71,6 +76,7 @@ h1, h2, h3 {
 .maxw1400 { max-width: 1400px; }
 .minh500 { min-height: 500px; }
 .bg { background: var(--background); }
+.bg-dark { background: var(--background-dark); }
 .black-bg { background: black; }
 .fz1 { font-size: 1rem; }
 .fz15 { font-size: 1.5rem; }
@@ -79,6 +85,11 @@ h1, h2, h3 {
 .fw100 { font-weight: 100; }
 .hidden { display: none; }
 .tac { text-align: center; }
+.border-t { border-top: solid 1px var(--background-light); }
+.border-l { border-left: solid 1px var(--background-light); }
+.border-r { border-right: solid 1px var(--background-light); }
+.border-b { border-bottom: solid 1px var(--background-light); }
+.border { border: solid 1px var(--background-light);}
 
 header {
   background-color: #292929;
@@ -149,14 +160,9 @@ hr {
 }
 
 /* Syntax Example */
-.syntax-example {
-  border: solid 1px var(--background-light);
-}
-.syntax-example > div > div {
+.syntax-example .input,
+.syntax-example .output {
   position: relative;
-}
-.syntax-example > div > div:first-child {
-  border-right: dotted 1px var(--background-light);
 }
 .syntax-example .input::before,
 .syntax-example .output::before {
@@ -168,22 +174,65 @@ hr {
   color: var(--background-light2);
 }
 .syntax-example .input::before {
-  content: "classs=";
+  content: attr(data-label);
   left: 14px;
 }
 .syntax-example .output::before {
-  content: ".css";
+  content: attr(data-label);
   right: 14px;
-}
-.syntax-example > div:nth-child(2) {
-  border-top: dotted 1px var(--background-light);
 }
 .syntax-example code {
   font-size: 0.9rem;
   font-family: inherit;
-  background: var(--background-light);
   padding: 0.2rem 0.2rem;
   border-radius: 4px;
+}
+.code1 {
+  border-bottom: solid 1px var(--bit1);
+}
+.code2 {
+  border-bottom: solid 1px var(--bit2);
+}
+.code3 {
+  border-bottom: solid 1px var(--bit3);
+}
+.bit1, .bit2, .bit3 {
+  position: relative;
+  padding: 0 4px 4px 4px;
+}
+.bit1::before, .bit2::before, .bit3::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 4px;
+}
+.bit1::after, .bit2::after, .bit3::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 4px;
+}
+.bit1 {
+  border-top: solid 1px var(--bit1);
+}
+.bit1::after, .bit1::before {
+  background: var(--bit1);
+}
+.bit2 {
+  border-top: solid 1px var(--bit2);
+}
+.bit2::after, .bit2::before {
+  background: var(--bit2);
+}
+.bit3 {
+  border-top: solid 1px var(--bit3);
+}
+.bit3::after, .bit3::before {
+  background: var(--bit3);
 }
 
 /* PrismJS Overrides */
