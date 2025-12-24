@@ -65,3 +65,10 @@ export function resolveApplys() {
 export function getInventory() {
   return INVENTORY;
 }
+export function getAllCSS() {
+  let combined = "";
+  Object.keys(INVENTORY).forEach((filePath) => {
+    combined += INVENTORY[filePath].toString() + "\n";
+  });
+  return combined;
+}

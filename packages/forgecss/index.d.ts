@@ -7,6 +7,7 @@ export type ForgeCSSOptions = {
   };
   verbose?: boolean;
   minify?: boolean;
+  bundleAll?: boolean;
 };
 
 export type ForgeInstance = {

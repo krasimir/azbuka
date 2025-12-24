@@ -2,20 +2,12 @@ import path from 'path';
 import { writeFile } from "fs/promises";
 import chokidar from "chokidar";
 
-import { extractStyles, getStylesByClassName, invalidateInventory, resolveApplys } from "./lib/inventory.js";
+import { extractStyles, getStylesByClassName, invalidateInventory, resolveApplys, getAllCSS } from "./lib/inventory.js";
 import { invalidateUsageCache, findUsages, getUsages } from "./lib/usages.js";
 import { astToRules, rulesToCSS } from './lib/forge-lang/Compiler.js';
 import { toAST } from './lib/forge-lang/Parser.js';
 import { getAllFiles, JSXParser, readFileContent } from './lib/helpers.js';
-
-const DEFAULT_OPTIONS = {
-  inventoryFiles: ["css", "less", "scss"],
-  usageFiles: ["html", "jsx", "tsx"],
-  usageAttributes: ["class", "className"],
-  breakpoints: {},
-  verbose: true,
-  minify: true
-};
+import { DEFAULT_OPTIONS } from './lib/constants.js';
 
 export default function ForgeCSS(options) {
   const config = { ...DEFAULT_OPTIONS };
@@ -26,6 +18,7 @@ export default function ForgeCSS(options) {
   config.usageAttributes = options?.usageAttributes ?? DEFAULT_OPTIONS.usageAttributes;
   config.verbose = options?.verbose ?? DEFAULT_OPTIONS.verbose;
   config.minify = options?.minify ?? DEFAULT_OPTIONS.minify;
+  config.bundleAll = options?.bundleAll ?? DEFAULT_OPTIONS.bundleAll;
 
   async function result(output) {
     try {
@@ -48,6 +41,10 @@ export default function ForgeCSS(options) {
       }
       if (config.verbose) {
         console.log("forgecss: output CSS generated successfully.");
+      }
+      if (config.bundleAll) {
+        const inventoryCSS = getAllCSS();
+        return inventoryCSS + "\n" + css;
       }
       return css;
     } catch (err) {

@@ -3,19 +3,14 @@ import {
   getStylesByClassName,
   invalidateInventory,
   resolveApplys,
-  getInventory
+  getInventory,
+  getAllCSS
 } from "./lib/inventory.js";
 import { invalidateUsageCache, findUsages, getUsages } from "./lib/usages.js";
 import fx from './lib/fx.js'
 import { astToRules, rulesToCSS } from "./lib/forge-lang/Compiler.js";
 import { toAST } from "./lib/forge-lang/Parser.js";
-
-const DEFAULT_OPTIONS = {
-  usageAttributes: ["class", "className"],
-  breakpoints: {},
-  verbose: true,
-  minify: true
-};
+import { DEFAULT_OPTIONS } from "./lib/constants.js";
 
 function ForgeCSS(options) {
   const config = { ...DEFAULT_OPTIONS };
@@ -43,6 +38,10 @@ function ForgeCSS(options) {
       const css = rulesToCSS(rules.filter(Boolean), config);
       if (config.verbose) {
         console.log("forgecss: output CSS generated successfully.");
+      }
+      if (config.bundleAll) {
+        const inventoryCSS = getAllCSS();
+        return inventoryCSS + "\n" + css;
       }
       return css;
     } catch (err) {
