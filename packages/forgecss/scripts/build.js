@@ -8,19 +8,19 @@ const minify = true;
 
 (async function () {
   await esbuild.build({
-    entryPoints: [path.join(__dirname, "..", "standalone", "fx.js")],
+    entryPoints: [path.join(__dirname, "..", "index.fx.js")],
     bundle: true,
     minify,
-    outfile: path.join(__dirname, "..", "dist", "fx.min.js"),
+    outfile: path.join(__dirname, "..", "dist", "client.min.js"),
     platform: "browser",
     sourcemap: false,
     plugins: []
   });
   await esbuild.build({
-    entryPoints: [path.join(__dirname, "..", "standalone", "forgecss.js")],
+    entryPoints: [path.join(__dirname, "..", "index.browser.js")],
     bundle: true,
     minify,
-    outfile: path.join(__dirname, "..", "dist", "forgecss.min.js"),
+    outfile: path.join(__dirname, "..", "dist", "standalone.min.js"),
     platform: "browser",
     sourcemap: false,
     plugins: []

@@ -1,4 +1,4 @@
-import fxFn from "../lib/fx.js";
+import fxFn from "./lib/fx.js";
 
 function fxAll(root) {
   var rootNode = root || document;

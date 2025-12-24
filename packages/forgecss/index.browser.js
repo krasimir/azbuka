@@ -4,11 +4,11 @@ import {
   invalidateInventory,
   resolveApplys,
   getInventory
-} from "../lib/inventory.js";
-import { invalidateUsageCache, findUsages, getUsages } from "../lib/usages.js";
-import { astToRules, rulesToCSS } from "../lib/forge-lang/Compiler.js";
-import { toAST } from "../lib/forge-lang/Parser.js";
-import fx from '../lib/fx.js'
+} from "./lib/inventory.js";
+import { invalidateUsageCache, findUsages, getUsages } from "./lib/usages.js";
+import fx from './lib/fx.js'
+import { astToRules, rulesToCSS } from "./lib/forge-lang/Compiler.js";
+import { toAST } from "./lib/forge-lang/Parser.js";
 
 const DEFAULT_OPTIONS = {
   usageAttributes: ["class", "className"],

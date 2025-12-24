@@ -34,6 +34,6 @@
     "esbuild": "^0.27.1"
   },
   "bin": {
-    "forgecss": "./cli.js"
+    "forgecss": "./index.cli.js"
   }
 }

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite\" \"node ../../packages/forgecss/cli.js -w -v\"",
+    "dev": "concurrently \"vite\" \"node ../../packages/forgecss/index.cli.js -w -v\"",
     "build": "forgecss --verbose && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
