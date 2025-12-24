@@ -5,5 +5,6 @@
     "desktop": "all and (min-width: 900px)",
     "mobile": "all and (max-width: 899px)"
   },
-  "bundleAll": true
+  "bundleAll": true,
+  "minify": true
 }
