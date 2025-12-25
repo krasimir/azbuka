@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "get-standalone": "cp ../forgecss/dist/standalone.min.js ./public/standalone.min.js",
-    "dev": "npm run get-standalone && concurrently \"vite\" \"forgecss -w -v\"",
-    "build": "npm run get-standalone && forgecss --verbose && tsc -b && vite build",
+    "dev": "npm run get-standalone && concurrently \"vite\" \"npx forgecss -w -v\"",
+    "build": "npm run get-standalone && npx forgecss -v && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },

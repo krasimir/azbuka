@@ -21,17 +21,19 @@ body {
   font-optical-sizing: auto;
   font-weight: 200;
   font-style: normal;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1.4em;
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
 }
+h1, h2, h3 {
+  line-height: 1.2em;
+}
 h1, h2, h3, p, ul {
   margin: 0;
   padding: 0;
-  line-height: 1.2em;
 }
 h1, h2, h3 {
   font-family: "Alfa Slab One", serif;
@@ -50,12 +52,14 @@ h1, h2, h3 {
 .py1 { padding-top: 1rem; padding-bottom: 1rem; }
 .py2 { padding-top: 2rem; padding-bottom: 2rem; }
 .py3 { padding-top: 3rem; padding-bottom: 3rem; }
+.px1 { padding-left: 1rem; padding-right: 1rem; }
 .pl3 { padding-left: 3rem; }
 .pr3 { padding-right: 3rem; }
 .pt3 { padding-top: 3rem; }
 .mt1 { margin-top: 1rem; }
 .mt2 { margin-top: 2rem; }
 .mt3 { margin-top: 3rem; }
+.my1 { margin-top: 1rem; margin-bottom: 1rem; }
 .my3 { margin-top: 3rem; margin-bottom: 3rem; }
 .mxauto { margin-left: auto; margin-right: auto; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; }
@@ -75,9 +79,6 @@ h1, h2, h3 {
 .maxw1000 { max-width: 1000px; }
 .maxw1400 { max-width: 1400px; }
 .minh500 { min-height: 500px; }
-.bg { background: var(--background); }
-.bg-dark { background: var(--background-dark); }
-.black-bg { background: black; }
 .fz1 { font-size: 1rem; }
 .fz15 { font-size: 1.5rem; }
 .fz2 { font-size: 2rem; }
@@ -91,16 +92,19 @@ h1, h2, h3 {
 .border-b { border-bottom: solid 1px var(--background-light); }
 .border { border: solid 1px var(--background-light);}
 
+.bg { background: var(--background); }
+.bg-dark { background: var(--background-dark); }
+.bg-black {
+  background: radial-gradient(125% 125% at 50% 10%, #000000 40%, #031724 100%);
+  border-top: solid 1px #575757;
+  border-bottom: solid 1px #272727;
+}
+
 header {
   background-color: #292929;
   opacity: 1;
   background: radial-gradient(circle, transparent 20%, #292929 20%, #292929 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, #292929 20%, #292929 80%, transparent 80%, transparent) 10px 10px, linear-gradient(#000000 0.8px, transparent 0.8px) 0 -0.4px, linear-gradient(90deg, #000000 0.8px, #292929 0.8px) -0.4px 0;
   background-size: 20px 20px, 20px 20px, 10px 10px, 10px 10px;
-}
-.hero {
-  background: radial-gradient(125% 125% at 50% 10%, #000000 40%, #031724 100%);
-  border-top: solid 1px #575757;
-  border-bottom: solid 1px #272727;
 }
 .hero nav a {
   text-align: center;
@@ -181,11 +185,12 @@ hr {
   content: attr(data-label);
   right: 14px;
 }
-.syntax-example code {
+.syntax-example code, .article code {
   font-size: 0.9rem;
   font-family: inherit;
   padding: 0.2rem 0.2rem;
   border-radius: 4px;
+  background: var(--background-dark);
 }
 .code1 {
   border-bottom: solid 1px var(--bit1);
@@ -233,6 +238,31 @@ hr {
 }
 .bit3::after, .bit3::before {
   background: var(--bit3);
+}
+
+/* Getting started */
+.article pre {
+  border: solid 1px var(--background-light) !important;
+  border-radius: 4px !important;
+  padding: 1rem !important;
+  font-size: 0.9rem !important;
+  overflow-x: auto !important;
+}
+.article :not(pre)>code[class*=language-], .article pre[class*=language-] {
+  background: var(--background-dark) !important;
+  font-size: 0.9rem !important;
+}
+.article ul {
+  margin-left: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.article code {
+  font-size: 1rem;
+  border: solid 1px var(--background-light);
+}
+.article pre code {
+  border: none;
 }
 
 /* PrismJS Overrides */
