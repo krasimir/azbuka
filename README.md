@@ -79,4 +79,4 @@ Internally it calls `fx`, which is also available globally for manual usage.
 
 ## API and configuration
 
-Refer to the official page for the CLI and JavaScript API docs: https://forgecss.krasimirtsonev.com
+Go to the official page for the CLI and JavaScript API docs: https://forgecss.krasimirtsonev.com
