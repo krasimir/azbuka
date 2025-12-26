@@ -199,6 +199,45 @@ export default function test() {
           ]
         }
       ]
+    },
+    {
+      input: "m1 theme(text(big) layout(flex center))",
+      expected: [
+        {
+          type: "token",
+          value: "m1"
+        },
+        {
+          type: "call",
+          name: "theme",
+          args: [
+            {
+              type: "call",
+              name: "text",
+              args: [
+                {
+                  type: "token",
+                  value: "big"
+                }
+              ]
+            },
+            {
+              type: "call",
+              name: "layout",
+              args: [
+                {
+                  type: "token",
+                  value: "flex"
+                },
+                {
+                  type: "token",
+                  value: "center"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ];
   // testing the parser

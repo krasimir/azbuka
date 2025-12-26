@@ -5,6 +5,9 @@ export type ForgeCSSOptions = {
   breakpoints?: {
     [key: string]: string;
   };
+  macros?: {
+    [key: string]: Function;
+  },
   verbose?: boolean;
   minify?: boolean;
   bundleAll?: boolean;
