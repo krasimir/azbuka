@@ -1,20 +1,7 @@
+![ForgeCSS](./packages/site/public/forgecss.svg)
+
 # ForgeCSS
 
 ForgeCSS turns strings into fully generated responsive CSS using a custom DSL.
 
-## Client ForgeCSS Expression transformer for vanilla apps
-
-```html
-<script src="https://unpkg.com/forgecss/dist/forgecss.min.js" defer async></script>
-```
-
-## Tests
-
-To run the tests:
-
-```
-> npm run tests
-> npm run tests -- --spec=02
-```
-
-in `/packages/forgetcss`.
+How and why + documentation here http://forgecss.krasimirtsonev.com
