@@ -11,8 +11,8 @@ export default function GettingStarted() {
 
   return (
     <div id="getting-started" className="bg-black article">
-      <h2 className={fx("pt2 tac fz2 desktop:fz3")}>Getting started</h2>
-      <div className={fx("maxw800 mxauto my3 mobile:px1")}>
+      <h2 className={az("pt2 tac fz2 desktop:fz3")}>Getting started</h2>
+      <div className={az("maxw800 mxauto my3 mobile:px1")}>
         <p>
           Azbuka is distributed as a <strong>npm</strong> package. So:
         </p>
@@ -78,7 +78,7 @@ export default function GettingStarted() {
 
 function MyComponent() {
   return (
-    <div className={fx("p2 mobile:p1")}>
+    <div className={az("p2 mobile:p1")}>
       Hello, Azbuka!
     </div>
   );

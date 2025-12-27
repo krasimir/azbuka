@@ -1,6 +1,6 @@
 {
   "name": "azbuka",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "type": "module",
   "description": "Azbuka - write CSS styles in your own alphabet",
   "author": "Krasimir Tsonev",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:krasimir/Azbuka.git"
+    "url": "git@github.com:krasimir/azbuka.git"
   },
   "license": "MIT",
   "keywords": [

@@ -81,7 +81,7 @@ function Azbuka(options) {
       }
       return result();
     },
-    fxAll: function (root) {
+    azAll: function (root) {
       const rootNode = root || document;
       const nodes = rootNode.querySelectorAll("[class]");
 

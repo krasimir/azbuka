@@ -1,7 +1,6 @@
 import { toAST } from "../../../lib/azbuka-lang/Parser.js";
 import { astToRules, rulesToCSS } from "../../../lib/azbuka-lang/Compiler.js";
-import fx from '../../../lib/az.js'
-import {minifyCSS} from "../../../lib/azbuka-lang/utils.js";
+import { minifyCSS } from "../../../lib/azbuka-lang/utils.js";
 
 const mockGetStyleByClassName = (_) => [{ prop: "foo", value: "bar", important: false }];
 
@@ -294,10 +293,10 @@ export default function test() {
     let usages = testCase.usage;
     const css = minifyCSS(rulesToCSS(rules, { minify: true }));
     if (!usages.every((usage, i) => {
-      if (fx(usage) !== testCase.classStr[i]) {
+      if (az(usage) !== testCase.classStr[i]) {
         console.error(`#${i} Compiler Test failed (classStr):`);
         console.error("Expected:\n", testCase.classStr[i]);
-        console.error("Got:\n", fx(usage));
+        console.error("Got:\n", az(usage));
         return false;
       }
       return true;

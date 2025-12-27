@@ -57,7 +57,7 @@ export default function Playground() {
       payload: [
         ACTUAL_HTML_FILE.filename,
         transformHtmlClassAttributes(html, (className: string) => {
-          return fx(className);
+          return az(className);
         })
       ]
     });
@@ -76,9 +76,9 @@ export default function Playground() {
 
   return (
     <section className="bg-black" id="playground">
-      <h2 className={fx("pt2 tac fz2 desktop:fz3")}>Test it out!</h2>
+      <h2 className={az("pt2 tac fz2 desktop:fz3")}>Test it out!</h2>
       <div>
-        <div className={fx("p1 desktop:grid2,pt3,pl3,pr3 gap1 mxauto")} style={{ maxWidth: "1700px" }}>
+        <div className={az("p1 desktop:grid2,pt3,pl3,pr3 gap1 mxauto")} style={{ maxWidth: "1700px" }}>
           <div className="flex-col">
             <Tabs files={inputFiles} onClick={(i: number) => updateInputFiles({ type: "selected", payload: i })} />
             <Editor
@@ -87,18 +87,18 @@ export default function Playground() {
               key={selectedInput.filename}
               onChange={(code) => updateInputFiles({ type: "change", payload: [selectedInput.filename, code] })}
             />
-            <div className={fx("flex-center mt1 mobile:hidden")}>
+            <div className={az("flex-center mt1 mobile:hidden")}>
               <img src="/input.svg" width="100" />
             </div>
           </div>
-          <div className={fx("flex-col mobile:mt1")}>
+          <div className={az("flex-col mobile:mt1")}>
             <Tabs files={outputFiles} onClick={(i: number) => updateOutputFiles({ type: "selected", payload: i })} />
             <div className="editor-wrapper">
               <pre>
                 <code className={`language-${selectedOutput.type}`}>{selectedOutput.content}</code>
               </pre>
             </div>
-            <div className={fx("flex-center mt1 mobile:hidden")}>
+            <div className={az("flex-center mt1 mobile:hidden")}>
               <img src="/output.svg" width="100" />
             </div>
           </div>
@@ -113,7 +113,7 @@ function Tabs({ files, onClick }: { files: File[]; onClick: Function }) {
     <ul className="files">
       {files.map((file, i) => {
         return (
-          <li key={file.filename} className={fx(`[${file.selected}]:selected`)}>
+          <li key={file.filename} className={az(`[${file.selected}]:selected`)}>
             <button onClick={() => onClick(i)}>{file.filename}</button>
           </li>
         );

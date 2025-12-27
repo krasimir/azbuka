@@ -151,7 +151,7 @@ const EXAMPLES = [
         <code className="code2">foo</code> is left. No additional CSS is generated. This is useful when used in the context of
         React apps where we have<br />
         <code>
-          className={"{fx(`["}{"${condition"}{"}]:foo"}
+          className={"{az(`["}{"${condition"}{"}]:foo"}
           {"`)}"}
         </code> which means that if <code>condition</code> is <code className="code1">false</code> then the class <code className="code2">foo</code> is removed.
       </span>
@@ -162,11 +162,11 @@ const EXAMPLES = [
 export default function Syntax() {
   return (
     <div id="syntax" className="bg-black py3">
-      <h2 className={fx("tac fz2 desktop:fz3")}>Syntax</h2>
+      <h2 className={az("tac fz2 desktop:fz3")}>Syntax</h2>
       {EXAMPLES.map((example, i) => {
         return (
           <div className="maxw800 mxauto mt2 syntax-example border-l border-t" key={i}>
-            <div className={fx("grid2 mobile:b")}>
+            <div className={az("grid2 mobile:b")}>
               <div className="tac p1 input border-r flex-center fz2" data-label="class=">
                 {example.input}
               </div>

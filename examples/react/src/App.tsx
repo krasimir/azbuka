@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './azbuka.css';
-import fx from '../../../packages/azbuka/fx'
+import az from '../../../packages/azbuka/az'
 
 function App() {
   const [ progress, setProgress ] = useState(false);
@@ -32,10 +32,10 @@ function App() {
   const isErrored = Boolean(errors.username || errors.password);
 
   return (
-    <main className={fx(`p1 flex-col ${theme}`)}>
-      <form onSubmit={submit} className={fx("fullw desktop:w400")}>
+    <main className={az(`p1 flex-col ${theme}`)}>
+      <form onSubmit={submit} className={az("fullw desktop:w400")}>
         <fieldset
-          className={fx(
+          className={az(
             `surface
             [.light &]:surface-light,text-light
             desktop:p2
@@ -48,38 +48,38 @@ function App() {
             <p className="primary">You are ready to go!</p>
           ) : (
             <>
-              <label className={fx("flex-col align-start desktop:flex-row,align-center gap1 space-between")}>
+              <label className={az("flex-col align-start desktop:flex-row,align-center gap1 space-between")}>
                 <span>Username:</span>
-                <div className={fx("fullw desktop:autow")}>
+                <div className={az("fullw desktop:autow")}>
                   <input
                     type="text"
                     name="username"
                     placeholder="<username here>"
                     disabled={progress}
-                    className={fx("disabled:op05 fullw desktop:autow")}
+                    className={az("disabled:op05 fullw desktop:autow")}
                     autoFocus
                     onChange={() => clearErrors("username")}
                   />
-                  {errors.username && <small className={fx("block error mt05")}>{errors.username}</small>}
+                  {errors.username && <small className={az("block error mt05")}>{errors.username}</small>}
                 </div>
               </label>
-              <label className={fx("flex-col align-start desktop:flex-row,align-center gap1 space-between")}>
+              <label className={az("flex-col align-start desktop:flex-row,align-center gap1 space-between")}>
                 <span>Password:</span>
-                <div className={fx("fullw desktop:autow")}>
+                <div className={az("fullw desktop:autow")}>
                   <input
                     type="password"
                     name="password"
                     placeholder="*****"
                     disabled={progress}
-                    className={fx("disabled:op05 fullw desktop:autow")}
+                    className={az("disabled:op05 fullw desktop:autow")}
                     onChange={() => clearErrors("password")}
                   />
-                  {errors.password && <small className={fx("block error mt05")}>{errors.password}</small>}
+                  {errors.password && <small className={az("block error mt05")}>{errors.password}</small>}
                 </div>
               </label>
               <button
                 type="submit"
-                className={fx("hover:primary2-bg [&:disabled]:op05 [&:disabled:hover]:primary-bg")}
+                className={az("hover:primary2-bg [&:disabled]:op05 [&:disabled:hover]:primary-bg")}
                 disabled={progress}
               >
                 {progress ? "Logging in ... " : "Login"}
@@ -88,7 +88,7 @@ function App() {
           )}
         </fieldset>
       </form>
-      <div className={fx("flex gap1 mt1")}>
+      <div className={az("flex gap1 mt1")}>
         <label>
           <input type="radio" name="theme" checked={theme === "dark"} onChange={() => setTheme("dark")} />
           Dark theme

@@ -72,9 +72,9 @@ export default function API() {
 
   return (
     <div id="api" className="bg-black article">
-      <h2 className={fx("pt2 tac fz2 desktop:fz3")}>API & Configuration</h2>
+      <h2 className={az("pt2 tac fz2 desktop:fz3")}>API & Configuration</h2>
       <hr />
-      <div className={fx("maxw800 mxauto my3 fz09 mobile:px1")}>
+      <div className={az("maxw800 mxauto my3 fz09 mobile:px1")}>
         <h3 className="fz2" id="configuration">
           Configuration
         </h3>
@@ -151,9 +151,9 @@ const cssC = await azbuka.parse({
 
 function Table({ items }: { items: { name: string; type: React.ReactNode; description: React.ReactNode }[] }) {
   return items.map(({ name, type, description }) => (
-    <div key={name} className={fx("grid1x1x2 mobile:b border")}>
-      <div className={fx("flex-center desktop:border-r")}>{name}</div>
-      <div className={fx("paler flex-center desktop:border-r")}>{type}</div>
+    <div key={name} className={az("grid1x1x2 mobile:b border")}>
+      <div className={az("flex-center desktop:border-r")}>{name}</div>
+      <div className={az("paler flex-center desktop:border-r")}>{type}</div>
       <div className="p05">{description}</div>
     </div>
   ));

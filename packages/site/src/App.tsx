@@ -1,4 +1,4 @@
-import fx from 'azbuka/fx'
+import fx from 'azbuka/az'
 import Syntax from './sections/Syntax';
 import Playground from './sections/Playground';
 import GettingStarted from './sections/GettingStarted';
@@ -8,17 +8,17 @@ function App() {
   return (
     <>
       <header>
-        <div className={fx("maxw1000 mxauto p1 desktop:py3")}>
+        <div className={az("maxw1000 mxauto p1 desktop:py3")}>
           <div className="flex-center gap1">
             <img src="/azbuka.svg" width="100" height="100" alt="Azbuka logo" />
           </div>
         </div>
       </header>
-      <section className={fx("hero bg-black py3 mobile:p1")}>
-        <div className={fx("maxw800 mxauto grid2x1 gap2 mobile:b")}>
+      <section className={az("hero bg-black py3 mobile:p1")}>
+        <div className={az("maxw800 mxauto grid2x1 gap2 mobile:b")}>
           <div>
-            <h1 className={fx("fz2 mobile:mt1 desktop:fz3")}>Azbuka is a compiler for utility CSS classes.</h1>
-            <p className={fx("fz15 mt1 desktop:mt2")}>
+            <h1 className={az("fz2 mobile:mt1 desktop:fz3")}>Azbuka is a compiler for utility CSS classes.</h1>
+            <p className={az("fz15 mt1 desktop:mt2")}>
               <span className="success">✔</span> Compiler that understands CSS class syntax
               <br />
               <span className="success">✔</span> It parses class strings, applies rules and structure, and compiles them
@@ -46,7 +46,7 @@ function App() {
               Azbuka gives you the freedom to create your own utilities and compile them into CSS.
             </p>
           </div>
-          <div className={fx("mobile:mt2")}>
+          <div className={az("mobile:mt2")}>
             <nav className="flex-col gap1">
               <a href="#syntax" className="flex-center gap05">
                 <img src="/align-left.svg" width="20" />
@@ -74,7 +74,7 @@ function App() {
         <div style={{ maxWidth: "800px" }} className="mxauto mt3">
           <img
             src="/azbuka-diagram.svg"
-            className={fx("hero-image b mxauto")}
+            className={az("hero-image b mxauto")}
             style={{ maxWidth: "100%" }}
             alt="Azbuka how-it-works diagram"
           />
@@ -85,7 +85,7 @@ function App() {
       <API />
       <Playground />
       <footer className="border-t">
-        <div className={fx("maxw1000 mxauto p1 desktop:py3 tac fz15")}>
+        <div className={az("maxw1000 mxauto p1 desktop:py3 tac fz15")}>
           <p>
             Made with ❤️ by{" "}
             <a href="https://krasimir.dev" target="_blank">

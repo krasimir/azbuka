@@ -61,7 +61,7 @@ function parseClass(str) {
   return out;
 }
 
-export default function fx(classes) {
+export default function az(classes) {
   return parseClass(classes)
     .map((className) => {
       let [label, rest] = splitClassName(className);

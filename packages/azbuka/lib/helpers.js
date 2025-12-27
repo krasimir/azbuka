@@ -2,7 +2,7 @@ import swc from "@swc/core";
 import fs from "fs/promises";
 import path from "path";
 
-const FUNC_NAME = "fx";
+const FUNC_NAME = "az";
 const { parse } = swc;
 
 export async function getAllFiles(dir, matchFiles) {

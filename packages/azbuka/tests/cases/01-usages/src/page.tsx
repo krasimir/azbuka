@@ -10,7 +10,7 @@ export default function App({ className }: { className?: string }) {
     <main>
       <h1 className={az("a desktop:b")}>Hello world!</h1>
       <p className={az(`c mobile:d desktop:b2 ${className} e`)}>Something else</p>
-      <p className="f desktop:g">No usage of fx so no pick up</p>
+      <p className="f desktop:g">No usage of az so no pick up</p>
       <p className={az(`a [${flagA}]:b [${flagB}]:c`)}></p>
       <button className={az("[&:hover]:a")}></button>
       <p className={az("a [.dark &]:b c")}></p>
