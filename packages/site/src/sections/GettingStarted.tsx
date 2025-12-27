@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import fx from 'forgecss/fx';
+import fx from 'azbuka/fx';
 
 export default function GettingStarted() {
   useEffect(() => {
@@ -14,15 +14,15 @@ export default function GettingStarted() {
       <h2 className={fx("pt2 tac fz2 desktop:fz3")}>Getting started</h2>
       <div className={fx("maxw800 mxauto my3 mobile:px1")}>
         <p>
-          ForgeCSS is distributed as a <strong>npm</strong> package. So:
+          Azbuka is distributed as a <strong>npm</strong> package. So:
         </p>
         <div className="my1">
           <pre>
-            <code className="language-javascript">{">"} npm install forgecss</code>
+            <code className="language-javascript">{">"} npm install azbuka</code>
           </pre>
         </div>
         <p>
-          Create a configuration file named <code>forgecss.config.json</code> in the root of your project:
+          Create a configuration file named <code>azbuka.config.json</code> in the root of your project:
         </p>
         <div className="my1">
           <pre>
@@ -39,19 +39,19 @@ export default function GettingStarted() {
             </code>
           </pre>
         </div>
-        <p>Now, you can use the ForgeCSS CLI to compile your CSS:</p>
+        <p>Now, you can use the Azbuka CLI to compile your CSS:</p>
         <div className="my1">
           <pre>
-            <code className="language-javascript">{">"} npx forgecss</code>
+            <code className="language-javascript">{">"} npx azbuka</code>
           </pre>
         </div>
         <p>or</p>
         <div className="my1">
           <pre>
-            <code className="language-javascript">{">"} npx forgecss -w</code>
+            <code className="language-javascript">{">"} npx azbuka -w</code>
           </pre>
         </div>
-        <p>if you want to run ForgeCSS in watch mode.</p>
+        <p>if you want to run Azbuka in watch mode.</p>
         <div className="mt1">
           This command will read your source files.
           <ul>
@@ -68,18 +68,18 @@ export default function GettingStarted() {
           </ul>
         </div>
         <p>
-          One last thing - since ForgeCSS is not touching your source files you have to use the <code>fx</code>{" "}
-          (ForgeCSS expression) helper function:
+          One last thing - since Azbuka is not touching your source files you have to use the <code>fx</code>{" "}
+          (Azbuka expression) helper function:
         </p>
         <div className="my1">
           <pre>
             <code className="language-jsx">
-              {`import fx from 'forgecss/fx';
+              {`import fx from 'azbuka/fx';
 
 function MyComponent() {
   return (
     <div className={fx("p2 mobile:p1")}>
-      Hello, ForgeCSS!
+      Hello, Azbuka!
     </div>
   );
 }`}
@@ -93,7 +93,7 @@ function MyComponent() {
             If you don't use React there is a <code>fx</code> function that you can use in the browser:
           </p>
           <pre>
-            <code className="language-html">{`<script src="http://unpkg.com/forgecss@latest/dist/client.min.js"></script>`}</code>
+            <code className="language-html">{`<script src="http://unpkg.com/azbuka@latest/dist/client.min.js"></script>`}</code>
           </pre>
           <p>
             Once you include that file onto your page you'll get the <code>class</code> attributes converted

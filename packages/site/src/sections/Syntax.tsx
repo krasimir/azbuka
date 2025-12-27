@@ -1,4 +1,4 @@
-import fx from "forgecss/fx";
+import fx from "azbuka/fx";
 
 const EXAMPLES = [
   {
@@ -56,7 +56,7 @@ const EXAMPLES = [
     ),
     text: (
       <span>
-        If <code className="code1">desktop</code> is a valid breakpoint (defined into the ForgeCSS configuration) and{" "}
+        If <code className="code1">desktop</code> is a valid breakpoint (defined into the Azbuka configuration) and{" "}
         <code className="code2">bar</code> is a valid utility, media query will be generated for the created class{" "}
         <code>desktop_bar</code> with the styles set in <code className="code2">.bar</code> class.
       </span>
@@ -86,7 +86,7 @@ const EXAMPLES = [
     ),
     text: (
       <span>
-        If <code className="code1">desktop</code> is a valid breakpoint (defined into the ForgeCSS configuration) and{" "}
+        If <code className="code1">desktop</code> is a valid breakpoint (defined into the Azbuka configuration) and{" "}
         <code className="code2">foo</code> and <code className="code3">bar</code> are valid utility classes, media query
         will be generated for the created classes <code>desktop_foo</code> and <code>desktop_bar</code>. The styles set
         in <code className="code2">.foo</code> class and <code className="code3">.bar</code> class will be applied.

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import './forgecss.css';
-import fx from '../../../packages/forgecss/fx'
+import './azbuka.css';
+import fx from '../../../packages/azbuka/fx'
 
 function App() {
   const [ progress, setProgress ] = useState(false);

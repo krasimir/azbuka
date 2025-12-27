@@ -1,4 +1,4 @@
-import fx from 'forgecss/fx'
+import fx from 'azbuka/fx'
 import Syntax from './sections/Syntax';
 import Playground from './sections/Playground';
 import GettingStarted from './sections/GettingStarted';
@@ -10,14 +10,14 @@ function App() {
       <header>
         <div className={fx("maxw1000 mxauto p1 desktop:py3")}>
           <div className="flex-center gap1">
-            <img src="/forgecss.svg" width="100" height="100" alt="ForgeCSS logo" />
+            <img src="/azbuka.svg" width="100" height="100" alt="Azbuka logo" />
           </div>
         </div>
       </header>
       <section className={fx("hero bg-black py3 mobile:p1")}>
         <div className={fx("maxw800 mxauto grid2x1 gap2 mobile:b")}>
           <div>
-            <h1 className={fx("fz2 mobile:mt1 desktop:fz3")}>ForgeCSS is a compiler for utility CSS classes.</h1>
+            <h1 className={fx("fz2 mobile:mt1 desktop:fz3")}>Azbuka is a compiler for utility CSS classes.</h1>
             <p className={fx("fz15 mt1 desktop:mt2")}>
               <span className="success">✔</span> Compiler that understands CSS class syntax
               <br />
@@ -43,7 +43,7 @@ function App() {
               </small>
             </p>
             <p className="mt1">
-              ForgeCSS gives you the freedom to create your own utilities and compile them into CSS.
+              Azbuka gives you the freedom to create your own utilities and compile them into CSS.
             </p>
           </div>
           <div className={fx("mobile:mt2")}>
@@ -64,7 +64,7 @@ function App() {
                 <img src="/code.svg" width="20" />
                 Playground
               </a>
-              <a href="https://github.com/krasimir/forgecss" target="_blank" className="flex-center gap05">
+              <a href="https://github.com/krasimir/azbuka" target="_blank" className="flex-center gap05">
                 <img src="/github.svg" width="20" />
                 GitHub repo
               </a>
@@ -73,10 +73,10 @@ function App() {
         </div>
         <div style={{ maxWidth: "800px" }} className="mxauto mt3">
           <img
-            src="/forgecss-diagram.svg"
+            src="/azbuka-diagram.svg"
             className={fx("hero-image b mxauto")}
             style={{ maxWidth: "100%" }}
-            alt="ForgeCSS how-it-works diagram"
+            alt="Azbuka how-it-works diagram"
           />
         </div>
       </section>
@@ -92,7 +92,7 @@ function App() {
               Krasimir Tsonev
             </a>
             <small className="b mt2">
-              <a href="https://github.com/krasimir/forgecss" className="paler">github.com/krasimir/forgecss</a>
+              <a href="https://github.com/krasimir/azbuka" className="paler">github.com/krasimir/azbuka</a>
             </small>
           </p>
         </div>

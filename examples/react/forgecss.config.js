@@ -1,6 +1,6 @@
 export default {
   "dir": "./src",
-  "output": "./src/forgecss.css",
+  "output": "./src/azbuka.css",
   "breakpoints": {
     "desktop": "all and (min-width: 768px)"
   },

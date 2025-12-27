@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import fx from 'forgecss/fx';
+import fx from 'azbuka/fx';
 
 const CONFIG = [
   { name: "dir", type: <strong>required</strong>, description: "The directory of your source files (CSS and markup)." },
@@ -48,12 +48,12 @@ const CLI = [
     name: "-c, --config <path>",
     type: "optional",
     description:
-      "Path to the configuration file. Default is 'forgecss.config.json', 'forgecss.config.js' or 'forgecss.config.mjs' in the root of the project."
+      "Path to the configuration file. Default is 'azbuka.config.json', 'azbuka.config.js' or 'azbuka.config.mjs' in the root of the project."
   },
   {
     name: "-w, --watch",
     type: "optional",
-    description: "Run ForgeCSS in watch mode, rebuilding on file changes."
+    description: "Run Azbuka in watch mode, rebuilding on file changes."
   },
   {
     name: "-v, --verbose",
@@ -79,8 +79,8 @@ export default function API() {
           Configuration
         </h3>
         <p className="mt1">
-          ForgeCSS is by default searching for <code>forgecss.config.json</code>, <code>forgecss.config.js</code> or{" "}
-          <code>forgecss.config.mjs</code> in the root folder of the project. The returned object has the following
+          Azbuka is by default searching for <code>azbuka.config.json</code>, <code>azbuka.config.js</code> or{" "}
+          <code>azbuka.config.mjs</code> in the root folder of the project. The returned object has the following
           shape:
         </p>
         <div className="mt2">
@@ -95,13 +95,13 @@ export default function API() {
         <h3 className="fz2 mt2" id="configuration">
           JavaScript
         </h3>
-        <p className="mt2">If you need to you can use ForgeCSS as a JavaScript module:</p>
+        <p className="mt2">If you need to you can use Azbuka as a JavaScript module:</p>
         <div className="my1">
           <pre>
             <code className="language-javascript">
-              {`import ForgeCSS from 'forgecss';
+              {`import Azbuka from 'azbuka';
 
-const forge = ForgeCSS({
+const azbuka = Azbuka({
   inventoryFiles: ['css', 'less', 'scss'], // optional
   usageFiles: ['html', 'jsx', 'tsx'], // optional
   usageAttributes: ['class', 'className'], // optional
@@ -116,21 +116,21 @@ const forge = ForgeCSS({
 });
 
 // Parse a directory
-const cssA = await forge.parseDirectory({
+const cssA = await azbuka.parseDirectory({
   dir: './src',
   output: './public/styles.css', // optional
   watch: false // optional
 });
 
 // Parse a single file
-const cssB = await forge.parseFile({
+const cssB = await azbuka.parseFile({
   file: './src/index.html',
   output: './public/styles.css', // optional
   watch: false // optional
 });
 
 // Parse CSS string
-const cssC = await forge.parse({
+const cssC = await azbuka.parse({
   css: '.mt1 { margin-top: 0.25rem; }',
   html: '<div class="mt1"></div>' // html or jsx
   // jsx: '<div className={"mt1"}></div>',
@@ -140,8 +140,8 @@ const cssC = await forge.parse({
           </pre>
         </div>
         <p>
-          The object that you pass to the <code>ForgeCSS</code> function is the{" "}
-          <a href="#configuration">configuration</a> object that controls how ForgeCSS processes your files and
+          The object that you pass to the <code>Azbuka</code> function is the{" "}
+          <a href="#configuration">configuration</a> object that controls how Azbuka processes your files and
           generates CSS.
         </p>
       </div>

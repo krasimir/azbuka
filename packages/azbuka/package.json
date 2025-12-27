@@ -1,0 +1,39 @@
+{
+  "name": "azbuka",
+  "version": "0.14.0",
+  "type": "module",
+  "description": "Azbuka - write CSS styles in your own alphabet",
+  "author": "Krasimir Tsonev",
+  "main": "index.js",
+  "scripts": {
+    "build": "node ./scripts/build.js",
+    "test": "node ./tests/run.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:krasimir/Azbuka.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "css",
+    "dsl",
+    "generator",
+    "processor",
+    "responsive",
+    "media queries"
+  ],
+  "dependencies": {
+    "@swc/cli": "^0.7.7",
+    "@swc/core": "1.12.1",
+    "chokidar": "^4.0.3",
+    "commander": "^14.0.2",
+    "postcss": "^8.5.6",
+    "postcss-safe-parser": "^7.0.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.1"
+  },
+  "bin": {
+    "azbuka": "./index.cli.js"
+  }
+}

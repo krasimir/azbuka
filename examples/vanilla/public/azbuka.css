@@ -1,0 +1,23 @@
+@media all and (min-width: 768px) {
+    .desktop_maxw600 {
+        max-width: 600px
+    }
+    .desktop_p2 {
+        padding: 2rem
+    }
+    .desktop_green {
+        color: #009f00
+    }
+    .desktop_white-bg {
+        background-color: #fff
+    }
+}
+.hover_blue:hover {
+    color: #0c5bb0;
+    text-decoration: underline
+}
+@media all and (max-width: 768px) {
+    .mobile_fz-sm {
+        font-size: 0.8em
+    }
+}

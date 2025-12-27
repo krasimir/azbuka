@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import fx from "forgecss/fx";
+import fx from "azbuka/fx";
 import { Editor } from "../Editor";
 import { ACTUAL_HTML_FILE, DEFAULT_FILES, DEFAULT_OUTPUT_FILES, TOTAL_CSS_FILE } from "../constants";
 import transformHtmlClassAttributes from "../utils/transformHtmlClassAttributes";
@@ -36,7 +36,7 @@ export default function Playground() {
   async function compile() {
     const css = inputFiles.filter((f) => f.filename === "styles.css")[0].content;
     const html = inputFiles.filter((f) => f.filename === "page.html")[0].content;
-    let config = inputFiles.filter((f) => f.filename === "forgecss.config.json")[0].content;
+    let config = inputFiles.filter((f) => f.filename === "azbuka.config.json")[0].content;
     try {
       config = JSON.parse(config);
       // @ts-ignore
@@ -46,8 +46,8 @@ export default function Playground() {
       return;
     }
     // @ts-ignore
-    const forgecss = ForgeCSS(config);
-    const result = await forgecss.parse({ css, html });
+    const azbuka = Azbuka(config);
+    const result = await azbuka.parse({ css, html });
     updateOutputFiles({
       type: "change",
       payload: [TOTAL_CSS_FILE.filename, result]

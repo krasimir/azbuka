@@ -4,15 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "get-standalone": "cp ../forgecss/dist/standalone.min.js ./public/standalone.min.js",
-    "dev": "npm run get-standalone && concurrently \"vite\" \"npx forgecss -w -v\"",
-    "build": "npm run get-standalone && npx forgecss -v && tsc -b && vite build",
+    "get-standalone": "cp ../azbuka/dist/standalone.min.js ./public/standalone.min.js",
+    "dev": "npm run get-standalone && concurrently \"vite\" \"npx azbuka -w -v\"",
+    "build": "npm run get-standalone && npx azbuka -v && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "concurrently": "^9.2.1",
-    "forgecss": "^0.14.0",
+    "azbuka": "^0.14.0",
     "monaco-editor": "^0.32.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
