@@ -17,7 +17,13 @@ export default async function test() {
     const css = await ForgeCSS({
       macros: {
         layout: (args) => {
-          console.log(args);
+          return args
+            .map(arg => {
+              switch(arg) {
+                case 'flex-centered':
+                  return 'flex justify-center items-center';
+              }
+            }).filter(Boolean);
         }
       }
     }).parse({

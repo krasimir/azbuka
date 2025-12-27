@@ -14,6 +14,7 @@ export default function ForgeCSS(options) {
   const config = { ...DEFAULT_OPTIONS };
 
   config.breakpoints = Object.assign({}, DEFAULT_OPTIONS.breakpoints, options?.breakpoints ?? {});
+  config.macros = Object.assign({}, DEFAULT_OPTIONS.macros, options?.macros ?? {});
   config.inventoryFiles = options?.inventoryFiles ?? DEFAULT_OPTIONS.inventoryFiles;
   config.usageFiles = options?.usageFiles ?? DEFAULT_OPTIONS.usageFiles;
   config.usageAttributes = options?.usageAttributes ?? DEFAULT_OPTIONS.usageAttributes;

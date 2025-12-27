@@ -5,11 +5,11 @@ import { normalizeLabel } from "../fx.js";
 export function astToRules(ast, options) {
   let rules = [];
   const { getStylesByClassName, cache = {}, config } = options
-  console.log(
-    "\n====================================================================== ^\n",
-    JSON.stringify(ast, null, 2),
-    "\n====================================================================== $\n"
-  );
+  // console.log(
+  //   "\n====================================================================== ^\n",
+  //   JSON.stringify(ast, null, 2),
+  //   "\n====================================================================== $\n"
+  // );
 
   for(let node of ast) {
     switch (node.type) {
@@ -86,8 +86,20 @@ export function astToRules(ast, options) {
         }
         break;
         case NODE_TYPE.CALL:
-          console.log(options);
-          console.log(node);
+          if(options.config.macros && typeof options.config.macros[node.name] === 'function') {
+            const macro = options.config.macros[node.name];
+            const macroArgs = node.args.map(arg => {
+              if (arg.type === NODE_TYPE.TOKEN) {
+                return arg.value;
+              }
+            });
+            let newStr = macro(macroArgs);
+            if (newStr) {
+              if (Array.isArray(newStr)) {
+                newStr = newStr.join(" ");
+              }
+            }
+          }
         break;
     }
   }
