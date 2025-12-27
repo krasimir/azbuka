@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node ./server.js",
-    "release": "cp -r ../dist ./public && gcloud builds submit --config cloudbuild.yaml"
+    "release": "rm -rf ./public && cp -r ../dist ./public && gcloud builds submit --config cloudbuild.yaml"
   },
   "dependencies": {
     "express": "4.21.2"

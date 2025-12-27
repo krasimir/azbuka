@@ -68,13 +68,13 @@ export default function GettingStarted() {
           </ul>
         </div>
         <p>
-          One last thing - since Azbuka is not touching your source files you have to use the <code>fx</code>{" "}
+          One last thing - since Azbuka is not touching your source files you have to use the <code>az</code>{" "}
           (Azbuka expression) helper function:
         </p>
         <div className="my1">
           <pre>
             <code className="language-jsx">
-              {`import fx from 'azbuka/fx';
+              {`import az from 'azbuka/az';
 
 function MyComponent() {
   return (
@@ -90,7 +90,7 @@ function MyComponent() {
             to <br /><code>p2 mobile_p1</code>.
           </p>
           <p className="mt1">
-            If you don't use React there is a <code>fx</code> function that you can use in the browser:
+            If you don't use React there is a <code>az</code> function that you can use in the browser:
           </p>
           <pre>
             <code className="language-html">{`<script src="http://unpkg.com/azbuka@latest/dist/client.min.js"></script>`}</code>
@@ -98,7 +98,7 @@ function MyComponent() {
           <p>
             Once you include that file onto your page you'll get the <code>class</code> attributes converted
             automatically. If you later want to trigger that logic you can execute the globally available function{" "}
-            <code>fxAll</code>. Internall calls <code>fx</code> which is also available globally for manual usage.
+            <code>azAll</code>. Internall calls <code>az</code> which is also available globally for manual usage.
           </p>
         </div>
       </div>
