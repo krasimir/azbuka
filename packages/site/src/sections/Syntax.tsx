@@ -165,25 +165,15 @@ const EXAMPLES = [
   {
     input: (
       <span>
-        [<span className="bit1">true</span>]:<span className="bit2">foo</span>
+        <span className="bit1">layout</span>(<span className="bit2">compact</span>)
       </span>
     ),
-    outputHTML: <span>foo</span>,
-    outputCSS: <span>-</span>,
+    outputHTML: <span>layout-compact</span>,
+    outputCSS: <span>.layout-compact {"{"} ... {"}"}</span>,
     text: (
       <span>
-        If the string between <code>[</code> and <code>]</code> is <code className="code1">true</code> then the class{" "}
-        <code className="code2">foo</code> is left. No additional CSS is generated. This is useful when used in the
-        context of React apps where we have
-        <br />
-        <code>
-          className={"{az(`["}
-          {"${condition"}
-          {"}]:foo"}
-          {"`)}"}
-        </code>{" "}
-        which means that if <code>condition</code> is <code className="code1">false</code> then the class{" "}
-        <code className="code2">foo</code> is removed.
+        If <code className="code1">layout</code> is a valid macro a class called <code>layout-compact</code> is created and the styles defined in the macro for the{" "}
+        <code>compact</code> argument are applied. Check out the Macros field in the <a href="#api">Configuration</a> section for more details.
       </span>
     )
   }

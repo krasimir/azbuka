@@ -11,7 +11,7 @@ export default function GettingStarted() {
 
   return (
     <div id="getting-started" className="bg-black article">
-      <h2 className={az("pt2 tac fz2 desktop:fz3")}>Getting started</h2>
+      <h2 className={az("pt2 title()")}>Getting started</h2>
       <div className={az("maxw800 mxauto my3 mobile:px1")}>
         <p>
           Azbuka is distributed as a <strong>npm</strong> package. So:
@@ -22,12 +22,12 @@ export default function GettingStarted() {
           </pre>
         </div>
         <p>
-          Create a configuration file named <code>azbuka.config.json</code> in the root of your project:
+          Create a configuration file named <code>azbuka.config.js</code> in the root of your project:
         </p>
         <div className="my1">
           <pre>
             <code className="language-json">
-              {`{
+              {`export default {
   "dir": "./src",
   "output": "./public/styles.css",
   "breakpoints": {

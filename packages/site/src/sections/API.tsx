@@ -24,12 +24,54 @@ const CONFIG = [
     type: "optional",
     description: 'An array of attributes to scan for class usage. Default is ["class", "className"].'
   },
-  { name: "breakpoints", type: "optional", description: <span>An object defining custom breakpoints.<pre><code className="language-json">{`{
+  {
+    name: "breakpoints",
+    type: "optional",
+    description: (
+      <span>
+        An object defining custom breakpoints.
+        <pre>
+          <code className="language-json">{`{
   "sm": "640px",
   "md": "768px",
   "lg": "1024px",
   "xl": "1280px"
-}`}</code></pre>so you can use <code>sm:mt1</code> for example.</span> },
+}`}</code>
+        </pre>
+        so you can use <code>sm:mt1</code> for example.
+      </span>
+    )
+  },
+  {
+    name: "macros",
+    type: "optional",
+    description: (
+      <span>
+        An object defining custom macros. Each key is the macro name and the value is a function that returns a string
+        of classes. For example:
+        <pre>
+          <code className="language-javascript">{`{
+  "title": () => "tac fz2 desktop:fz3"
+}`}</code>
+        </pre>
+        so you can use <code>title()</code> in your class names. Have in mind that the macros can also accept arguments. For example:
+        <pre>
+          <code className="language-javascript">{`{
+  "layout": (type) => {
+    if (type === "compact") {
+      return "p1 m1";
+    }
+    if (type === "spacious") {
+      return "p3 m3";
+    }
+    return "";
+  }
+}`}</code>
+        </pre>
+        so you can use <code>layout(compact)</code> or <code>layout(spacious)</code> in your class names.
+      </span>
+    )
+  },
   {
     name: "verbose",
     type: "boolean",
@@ -72,7 +114,7 @@ export default function API() {
 
   return (
     <div id="api" className="bg-black article">
-      <h2 className={az("pt2 tac fz2 desktop:fz3")}>API & Configuration</h2>
+      <h2 className={az("pt2 title()")}>API & Configuration</h2>
       <hr />
       <div className={az("maxw800 mxauto my3 fz09 mobile:px1")}>
         <h3 className="fz2" id="configuration">
