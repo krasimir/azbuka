@@ -28,7 +28,8 @@ function Azbuka(options) {
       const ast = toAST(
         Object.values(usages).reduce((acc, i) => {
           return acc.concat(i);
-        }, [])
+        }, []),
+        cache
       );
       let rules = astToRules(ast, {
         getStylesByClassName,

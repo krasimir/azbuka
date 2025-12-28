@@ -4,7 +4,7 @@
 
 # Azbuka
 
-Azbuka turns strings into fully generated responsive CSS using a custom DSL.
+Azbuka - Write CSS styles in your own alphabet.
 
 How and why + documentation here https://azbuka.krasimirtsonev.com
 

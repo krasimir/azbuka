@@ -1,10 +1,12 @@
 import { toAST } from "../../../lib/azbuka-lang/Parser.js";
-import { astToRules, rulesToCSS } from "../../../lib/azbuka-lang/Compiler.js";
+import { astToRules, rulesToCSS, nodeToClassNames } from "../../../lib/azbuka-lang/Compiler.js";
 import { minifyCSS } from "../../../lib/azbuka-lang/utils.js";
+import az from '../../../az.js'
 
 const mockGetStyleByClassName = (_) => [{ prop: "foo", value: "bar", important: false }];
 
 export default function test() {
+  // testing the parser
   const parserCases = [
     {
       input: "btn primary hover:red",
@@ -239,7 +241,6 @@ export default function test() {
       ]
     }
   ];
-  // testing the parser
   for (let i = 0; i < parserCases.length; i++) {
     const testCase = parserCases[i];
     const result = toAST(testCase.input);
@@ -273,10 +274,11 @@ export default function test() {
     {
       usage: ["desktop:[.dark &]:b desktop:mt1,p1"],
       classStr: ["desktop-dark-I_b desktop_mt1 desktop_p1"],
-      expectedCSS: "@media all and (min-width:1024px){.dark .dark-I_b{foo:bar}.desktop_mt1{foo:bar}.desktop_p1{foo:bar}}"
+      expectedCSS:
+        "@media all and (min-width:1024px){.dark .dark-I_b{foo:bar}.desktop_mt1{foo:bar}.desktop_p1{foo:bar}}"
     }
   ];
-  for (let i=0; i<compilerCases.length; i++) {
+  for (let i = 0; i < compilerCases.length; i++) {
     const testCase = compilerCases[i];
     const ast = toAST(testCase.usage);
     const rules = astToRules(ast, {
@@ -292,15 +294,17 @@ export default function test() {
     });
     let usages = testCase.usage;
     const css = minifyCSS(rulesToCSS(rules, { minify: true }));
-    if (!usages.every((usage, i) => {
-      if (az(usage) !== testCase.classStr[i]) {
-        console.error(`#${i} Compiler Test failed (classStr):`);
-        console.error("Expected:\n", testCase.classStr[i]);
-        console.error("Got:\n", az(usage));
-        return false;
-      }
-      return true;
-    })) {
+    if (
+      !usages.every((usage, i) => {
+        if (az(usage) !== testCase.classStr[i]) {
+          console.error(`#${i} Compiler Test failed (classStr):`);
+          console.error("Expected:\n", testCase.classStr[i]);
+          console.error("Got:\n", az(usage));
+          return false;
+        }
+        return true;
+      })
+    ) {
       return false;
     }
     if (css !== testCase.expectedCSS) {
@@ -310,5 +314,37 @@ export default function test() {
       return false;
     }
   }
+
+  // testing nodeToClassNames
+  const nodeToClassNamesCases = [
+    {
+      input: "mt2"
+    },
+    {
+      input: "hover:mt1"
+    },
+    {
+      input: "[.dark &]:text-white"
+    },
+    {
+      input: "[&:hover]:red,fz2"
+    },
+    {
+      input: "theme(text(big) layout(flex center))"
+    }
+  ];
+  for (let i = 0; i < nodeToClassNamesCases.length; i++) {
+    const testCase = nodeToClassNamesCases[i];
+    const ast = toAST(testCase.input);
+    const result = nodeToClassNames(ast[0]);
+    if (result !== az(testCase.input)) {
+      console.error(`#${i} nodeToClassNames Test failed:`);
+      console.error("Expected:\n", az(testCase.input));
+      console.error("Got:\n", result);
+      return false;
+    }
+  }
+
+
   return true;
 }
