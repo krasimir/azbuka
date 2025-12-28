@@ -33,6 +33,19 @@ const CASES = [
     `,
     usage: "text()",
     expectedCSS: ".text{padding:1rem}.dark .text{color:white;margin-top:2rem}"
+  },
+  {
+    styles: `
+      .p1 { padding: 1rem }
+      .mt2 { margin-top: 2rem }
+      .white { color: white }
+      .disabled { opacity: 0.5 }
+      .border { border: solid 1px #000; }
+      .tac { text-align: center; }
+    `,
+    usage: "primary(space() disabled())",
+    expectedCSS:
+      ".primary-space-disabled{margin-top:2rem;opacity:0.5;color:white;padding:1rem;border:solid 1px #000}@media (min-width:1024px){.primary-space-disabled{text-align:center}}"
   }
 ];
 
@@ -40,6 +53,9 @@ export default async function test() {
   for (let testCase of CASES) {
     const css = await Azbuka({
       verbose: false,
+      breakpoints: {
+        d: "(min-width: 1024px)"
+      },
       macros: {
         layout: (args) => {
           return args
@@ -67,6 +83,15 @@ export default async function test() {
                   return arg;
               }
             }).filter(Boolean);
+        },
+        primary: (args) =>{
+          return "border p1";
+        },
+        space: () => {
+          return 'mt2';
+        },
+        disabled: () => {
+          return 'disabled white p1 d:tac';
         }
       }
     }).parse({

@@ -86,58 +86,45 @@ export function astToRules(ast, options) {
         break;
 
         case NODE_TYPE.CALL:
-          function handleMacro(node, currentRule) {
-            let rule = currentRule;
-            function registerRule(pickStylesFrom) {
-              if (!rule) {
-                rule = createRule(`.${nodeToClassNames(node)}`, pickStylesFrom);
-              } else {
-                appendStylesToRule(rule, pickStylesFrom);
-              }
-            }
+          const callCurrentSelector = nodeToClassNames(node);
+          let rule = createRule(`.${callCurrentSelector}`);
+          (function handleMacro(node) {
             if (options.config.macros) {
               if (typeof options.config.macros[node.name] === "function") {
                 const macro = options.config.macros[node.name];
                 const macroArgs = node.args.map((arg) => {
                   if (arg.type === NODE_TYPE.TOKEN) {
                     return arg.value;
+                  } else if (arg.type === NODE_TYPE.CALL) {
+                    handleMacro(arg);
                   }
-                });
+                }).filter(Boolean);
                 try {
-                  let newStr = macro(macroArgs);
-                  if (newStr) {
-                    if (Array.isArray(newStr)) {
-                      newStr = newStr.join(" ");
-                    }
-                  }
-                  const ast = toAST(newStr, options.cache);
+                  const ast = toAST(macro(macroArgs), options.cache);
                   const globalTokens = ast.filter(n => n.type === NODE_TYPE.TOKEN);
-                  globalTokens.forEach((t) => registerRule(t.value));
-                  const rulesToAppend = astToRules(ast, { ...options, currentSelector: nodeToClassNames(node) });
-                  rulesToAppend.forEach(r => {
-                    rules.push(r);
-                  });
+                  globalTokens.forEach((t) => appendStylesToRule(rule, t.value));
+                  const rulesToAppend = astToRules(ast, { ...options, currentSelector: callCurrentSelector });
+                  rulesToAppend.forEach((r) => rules.push(r));
                 } catch (err) {
                   console.error(`azbuka: error executing macro "${node.name}": ${err}`);
                 }
               } else if (node.args.length > 0) {
                 node.args.forEach((arg) => {
                   if (arg.type === NODE_TYPE.TOKEN) {
-                    registerRule(arg.value);
+                    appendStylesToRule(rule, arg.value);
                   } else if (arg.type === NODE_TYPE.CALL) {
-                    handleMacro(arg, rule);
+                    handleMacro(arg);
                   }
                 });
               }
             }
-          }
-          handleMacro(node);
+          })(node);
         break;
 
     }
   }
 
-  function createRule(selector, pickStylesFrom, dontAddToGlobal = false, cacheKey = null) {
+  function createRule(selector, pickStylesFrom = '', dontAddToGlobal = false, cacheKey = null) {
     let rule = cache[cacheKey ?? selector];
     if (!rule) {
       rule = cache[cacheKey ?? selector] = postcss.rule({ selector });
@@ -145,39 +132,26 @@ export function astToRules(ast, options) {
         rules.push(rule);
       }
     }
+    appendStylesToRule(rule, pickStylesFrom);
+    return rule;
+  }
+  function appendStylesToRule(rule, pickStylesFrom = '') {
     let decls = [];
-    pickStylesFrom.split(' ').forEach(cn => {
-      if (cache['decls-' + cn]) {
-        decls = decls.concat(cache['decls-' + cn]);
+    pickStylesFrom.split(" ").forEach((cn) => {
+      if (cache["decls-" + cn]) {
+        decls = decls.concat(cache["decls-" + cn]);
         return;
       }
       if (cn.trim() === "") return;
-      decls = decls.concat(cache['decls-' + cn] = getStylesByClassName(cn));
+      decls = decls.concat((cache["decls-" + cn] = getStylesByClassName(cn)));
     });
     if (decls.length === 0) {
-      return;
+      return rule;
     }
     decls.forEach((d) => {
       if (rule.some((existingDecl) => existingDecl.prop === d.prop)) {
         return;
       }
-      rule.append(
-        postcss.decl({
-          prop: d.prop,
-          value: d.value,
-          important: d.important
-        })
-      );
-    });
-    return rule;
-  }
-  function appendStylesToRule(rule, pickStylesFrom) {
-    let decls = [];
-    pickStylesFrom.split(' ').forEach(cn => {
-      if (cn.trim() === "") return;
-      decls = decls.concat(getStylesByClassName(cn));
-    });
-    decls.forEach((d) => {
       rule.append(
         postcss.decl({
           prop: d.prop,
