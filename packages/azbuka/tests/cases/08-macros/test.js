@@ -2,36 +2,37 @@ import { minifyCSS, expect } from "../../helpers.js";
 import Azbuka from "../../../index.js";
 
 const CASES = [
-  // {
-  //   styles: `
-  //     .red { color: red }
-  //     .mt1 { margin-top: 1rem }
-  //     .flex { display: flex }
-  //     .justify-center { justify-content: center }
-  //     .items-center { align-items: center }
-  //   `,
-  //   usage: "red layout(flex-centered)",
-  //   expectedCSS: ".layout-flex-centered{display:flex;justify-content:center;align-items:center}"
-  // },
-  // {
-  //   styles: `
-  //     .red { color: red }
-  //     .fz2 { font-size: 2rem }
-  //     .flex { display: flex }
-  //     .justify-center { justify-content: center }
-  //     .items-center { align-items: center }
-  //   `,
-  //   usage: "uknown(red text(big) layout(flex center))",
-  //   expectedCSS:
-  //     ".uknown-red-text-big-layout-flex-center{color:red;font-size:2rem;display:flex;justify-content:center;align-items:center}"
-  // },
+  {
+    styles: `
+      .red { color: red }
+      .mt1 { margin-top: 1rem }
+      .flex { display: flex }
+      .justify-center { justify-content: center }
+      .items-center { align-items: center }
+    `,
+    usage: "red layout(flex-centered)",
+    expectedCSS: ".layout-flex-centered{display:flex;justify-content:center;align-items:center}"
+  },
+  {
+    styles: `
+      .red { color: red }
+      .fz2 { font-size: 2rem }
+      .flex { display: flex }
+      .justify-center { justify-content: center }
+      .items-center { align-items: center }
+    `,
+    usage: "uknown(red text(big) layout(flex center))",
+    expectedCSS:
+      ".uknown-red-text-big-layout-flex-center{color:red;font-size:2rem;display:flex;justify-content:center;align-items:center}"
+  },
   {
     styles: `
       .p1 { padding: 1rem }
+      .mt2 { margin-top: 2rem }
       .white { color: white }
     `,
     usage: "text()",
-    expectedCSS: "..."
+    expectedCSS: ".text{padding:1rem}.dark .text{color:white;margin-top:2rem}"
   }
 ];
 
@@ -39,9 +40,6 @@ export default async function test() {
   for (let testCase of CASES) {
     const css = await Azbuka({
       verbose: false,
-      breakpoints: {
-        desktop: "min-width: 1024px"
-      },
       macros: {
         layout: (args) => {
           return args
@@ -58,7 +56,7 @@ export default async function test() {
         },
         text: (args) => {
           if (args.length === 0) {
-            return "[.dark &]:white p1";
+            return "[.dark &]:white,mt2 p1";
           }
           return args
             .map(arg => {

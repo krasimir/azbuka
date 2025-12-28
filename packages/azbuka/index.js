@@ -24,7 +24,7 @@ export default function Azbuka(options) {
 
   async function result(output) {
     try {
-      const cache = {};
+      let cache = {};
       const usages = getUsages();
       const ast = toAST(
         Object.values(usages).reduce((acc, i) => acc.concat(i), []),
@@ -49,6 +49,8 @@ export default function Azbuka(options) {
       if (config.verbose) {
         console.log("azbuka: output CSS generated successfully.");
       }
+      Object.keys(cache).forEach((k) => delete cache[k]);
+      cache = {};
       return css;
     } catch (err) {
       console.error(`azbuka: error generating output CSS: ${err}`);

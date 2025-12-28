@@ -52,8 +52,8 @@ export function astToRules(ast, options) {
             });
           } else {
             classes.forEach((cls) => {
-              const selector = `.${variantSelector}_${cls}`;
-              const rule = createRule(selector, cls, true);
+              const selector = currentSelector ? `.${currentSelector}` : `.${variantSelector}_${cls}`;
+              const rule = createRule(selector, cls, true, 'media_' + selector);
               if (!rule || !mediaRule) return;
               if (!hasRuleWithSelector(mediaRule, selector)) {
                 mediaRule.append(rule);
@@ -111,6 +111,8 @@ export function astToRules(ast, options) {
                     }
                   }
                   const ast = toAST(newStr, options.cache);
+                  const globalTokens = ast.filter(n => n.type === NODE_TYPE.TOKEN);
+                  globalTokens.forEach((t) => registerRule(t.value));
                   const rulesToAppend = astToRules(ast, { ...options, currentSelector: nodeToClassNames(node) });
                   rulesToAppend.forEach(r => {
                     rules.push(r);
@@ -135,18 +137,22 @@ export function astToRules(ast, options) {
     }
   }
 
-  function createRule(selector, pickStylesFrom, dontAddToGlobal = false) {
-    let rule = cache[selector];
+  function createRule(selector, pickStylesFrom, dontAddToGlobal = false, cacheKey = null) {
+    let rule = cache[cacheKey ?? selector];
     if (!rule) {
-      rule = cache[selector] = postcss.rule({ selector });
+      rule = cache[cacheKey ?? selector] = postcss.rule({ selector });
       if (!dontAddToGlobal) {
         rules.push(rule);
       }
     }
     let decls = [];
     pickStylesFrom.split(' ').forEach(cn => {
+      if (cache['decls-' + cn]) {
+        decls = decls.concat(cache['decls-' + cn]);
+        return;
+      }
       if (cn.trim() === "") return;
-      decls = decls.concat(getStylesByClassName(cn));
+      decls = decls.concat(cache['decls-' + cn] = getStylesByClassName(cn));
     });
     if (decls.length === 0) {
       return;
