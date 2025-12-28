@@ -68,7 +68,7 @@ export default function GettingStarted() {
           </ul>
         </div>
         <p>
-          One last thing - since Azbuka is not touching your source files you have to use the <code>az</code>{" "}
+          Since Azbuka is not touching your source files you have to use the <code>az</code>{" "}
           (Azbuka expression) helper function:
         </p>
         <div className="my1">
@@ -98,7 +98,7 @@ function MyComponent() {
           <p>
             Once you include that file onto your page you'll get the <code>class</code> attributes converted
             automatically. If you later want to trigger that logic you can execute the globally available function{" "}
-            <code>azAll</code>. Internall calls <code>az</code> which is also available globally for manual usage.
+            <code>azAll</code>. Internally calls <code>az</code> which is also available globally for manual usage.
           </p>
         </div>
       </div>

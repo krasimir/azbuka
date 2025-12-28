@@ -16,6 +16,7 @@ function Azbuka(options) {
   const config = { ...DEFAULT_OPTIONS };
 
   config.breakpoints = Object.assign({}, DEFAULT_OPTIONS.breakpoints, options?.breakpoints ?? {});
+  config.macros = Object.assign({}, DEFAULT_OPTIONS.macros, options?.macros ?? {});
   config.usageAttributes = options?.usageAttributes ?? DEFAULT_OPTIONS.usageAttributes;
   config.verbose = options?.verbose ?? DEFAULT_OPTIONS.verbose;
   config.minify = options?.minify ?? DEFAULT_OPTIONS.minify;
@@ -23,12 +24,10 @@ function Azbuka(options) {
 
   async function result() {
     try {
-      const cache = {};
+      let cache = {};
       const usages = getUsages();
       const ast = toAST(
-        Object.values(usages).reduce((acc, i) => {
-          return acc.concat(i);
-        }, []),
+        Object.values(usages).reduce((acc, i) => acc.concat(i), []),
         cache
       );
       let rules = astToRules(ast, {
@@ -47,6 +46,8 @@ function Azbuka(options) {
       if (config.verbose) {
         console.log("azbuka: output CSS generated successfully.");
       }
+      Object.keys(cache).forEach((k) => delete cache[k]);
+      cache = {};
       return css;
     } catch (err) {
       console.error(`azbuka: error generating output CSS: ${err}`);
@@ -55,7 +56,7 @@ function Azbuka(options) {
   }
 
   return {
-    async parse({ css, html, jsx }) {
+    async parse({ css, html }) {
       if (!css) {
         throw new Error('azbuka: parse requires "css".');
       }
@@ -74,8 +75,6 @@ function Azbuka(options) {
       try {
         if (html) {
           await findUsages("usage.html", html);
-        } else if (jsx) {
-          await findUsages("usage.jsx", jsx);
         }
       } catch (err) {
         console.error(`azbuka: error extracting usages.`, err);

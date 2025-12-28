@@ -36,9 +36,11 @@ export default function Playground() {
   async function compile() {
     const css = inputFiles.filter((f) => f.filename === "styles.css")[0].content;
     const html = inputFiles.filter((f) => f.filename === "page.html")[0].content;
-    let config = inputFiles.filter((f) => f.filename === "azbuka.config.json")[0].content;
+    let config = inputFiles.filter((f) => f.filename === "azbuka.config.js")[0].content;
     try {
-      config = JSON.parse(config);
+      config = config.replace("export default", "return");
+      // @ts-ignore
+      config = new Function(config)();
       // @ts-ignore
       config.minify = false;
     } catch (err) {
