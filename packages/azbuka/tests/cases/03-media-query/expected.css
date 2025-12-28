@@ -1,5 +1,34 @@
+.inline {
+  display: inline;
+}
+.mt1 {
+  margin-top: 0.25rem;
+}
+.mt2 {
+  margin-top: 0.5rem;
+}
+.pt2 {
+  padding-top: 0.5rem;
+}
+.fz2 {
+  font-size: 2rem;
+}
+.no-used {
+  color: yellow;
+}
+.red {
+  color: red;
+}
+
+.title {
+    margin-top: 0.25rem;
+    display: inline
+}
 @media all and (min-width: 1024px) {
     .desktop_mt2 {
+        margin-top: 0.5rem
+    }
+    .title {
         margin-top: 0.5rem
     }
     .desktop_mt1 {

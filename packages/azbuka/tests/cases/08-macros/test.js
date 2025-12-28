@@ -4,6 +4,15 @@ import Azbuka from "../../../index.js";
 const CASES = [
   {
     styles: `
+      .tac { text-align: center; }
+      .fz2 { font-size: 2rem }
+      .fz3 { font-size: 3rem }
+    `,
+    usage: "title()",
+    expectedCSS: ".title{text-align:center;font-size:2rem}@media (min-width:1024px){.title{font-size:3rem}}"
+  },
+  {
+    styles: `
       .red { color: red }
       .mt1 { margin-top: 1rem }
       .flex { display: flex }
@@ -59,39 +68,44 @@ export default async function test() {
       macros: {
         layout: (args) => {
           return args
-            .map(arg => {
-              switch(arg) {
-                case 'flex-centered':
-                  return 'flex justify-center items-center';
-                case 'center':
-                  return 'justify-center items-center';
+            .map((arg) => {
+              switch (arg) {
+                case "flex-centered":
+                  return "flex justify-center items-center";
+                case "center":
+                  return "justify-center items-center";
                 default:
                   return arg;
               }
-            }).filter(Boolean);
+            })
+            .filter(Boolean);
         },
         text: (args) => {
           if (args.length === 0) {
             return "[.dark &]:white,mt2 p1";
           }
           return args
-            .map(arg => {
-              switch(arg) {
-                case 'big':
-                  return 'fz2';
+            .map((arg) => {
+              switch (arg) {
+                case "big":
+                  return "fz2";
                 default:
                   return arg;
               }
-            }).filter(Boolean);
+            })
+            .filter(Boolean);
         },
-        primary: (args) =>{
+        primary: (args) => {
           return "border p1";
         },
         space: () => {
-          return 'mt2';
+          return "mt2";
         },
         disabled: () => {
-          return 'disabled white p1 d:tac';
+          return "disabled white p1 d:tac";
+        },
+        title: () => {
+          return "tac fz2 d:fz3";
         }
       }
     }).parse({

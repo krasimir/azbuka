@@ -148,12 +148,42 @@ const EXAMPLES = [
     text: (
       <span>
         If the string between <code>[</code> and <code>]</code> is <code className="code1">true</code> then the class{" "}
-        <code className="code2">foo</code> is left. No additional CSS is generated. This is useful when used in the context of
-        React apps where we have<br />
+        <code className="code2">foo</code> is left. No additional CSS is generated. This is useful when used in the
+        context of React apps where we have
+        <br />
         <code>
-          className={"{az(`["}{"${condition"}{"}]:foo"}
+          className={"{az(`["}
+          {"${condition"}
+          {"}]:foo"}
           {"`)}"}
-        </code> which means that if <code>condition</code> is <code className="code1">false</code> then the class <code className="code2">foo</code> is removed.
+        </code>{" "}
+        which means that if <code>condition</code> is <code className="code1">false</code> then the class{" "}
+        <code className="code2">foo</code> is removed.
+      </span>
+    )
+  },
+  {
+    input: (
+      <span>
+        [<span className="bit1">true</span>]:<span className="bit2">foo</span>
+      </span>
+    ),
+    outputHTML: <span>foo</span>,
+    outputCSS: <span>-</span>,
+    text: (
+      <span>
+        If the string between <code>[</code> and <code>]</code> is <code className="code1">true</code> then the class{" "}
+        <code className="code2">foo</code> is left. No additional CSS is generated. This is useful when used in the
+        context of React apps where we have
+        <br />
+        <code>
+          className={"{az(`["}
+          {"${condition"}
+          {"}]:foo"}
+          {"`)}"}
+        </code>{" "}
+        which means that if <code>condition</code> is <code className="code1">false</code> then the class{" "}
+        <code className="code2">foo</code> is removed.
       </span>
     )
   }
@@ -162,7 +192,7 @@ const EXAMPLES = [
 export default function Syntax() {
   return (
     <div id="syntax" className="bg-black py3">
-      <h2 className={az("tac fz2 desktop:fz3")}>Syntax</h2>
+      <h2 className={az("title()")}>Syntax</h2>
       {EXAMPLES.map((example, i) => {
         return (
           <div className="maxw800 mxauto mt2 syntax-example border-l border-t" key={i}>

@@ -12,7 +12,7 @@ const CASES = [
     `,
     usages: ["red d:mt1 d:mt1", "mt1 d:red text()", "[.dark &]:flex d:mt1", "text()"],
     expectedCSS:
-      "@media (min-width:1024px){.d_mt1{margin-top:1rem}.d_red{color:red}.text{display:flex}}.text{color:red;margin-top:1rem}.dark .dark-I_flex{display:flex}"
+      ".text{color:red;margin-top:1rem}.dark .dark-I_flex{display:flex}@media (min-width:1024px){.d_mt1{margin-top:1rem}.d_red{color:red}.text{display:flex}}"
   }
 ];
 

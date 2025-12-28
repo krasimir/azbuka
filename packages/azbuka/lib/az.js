@@ -79,6 +79,7 @@ export default function az(classes) {
 export function normalizeLabel(label) {
   let normalized = label.trim();
   normalized = normalized.replace(/[&]/g, "I");
+  normalized = normalized.replace(/\(\)/g, "");
   normalized = normalized.replace(/[:| =|(]/g, "-");
   normalized = normalized.replace(/[^a-zA-Z0-9_-]/g, "");
   return normalized;

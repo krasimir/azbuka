@@ -14,7 +14,8 @@ const transformations = [
   ["[.dark &]:black mt2", "dark-I_black mt2"],
   ["mt1 [.dark &[type='password']]:mt2", "mt1 dark-Itype-password_mt2"],
   ["desktop:[.dark &]:b", "desktop-dark-I_b"],
-  ["m1 theme(text(big) layout(flex center))", "m1 theme-text-big-layout-flex-center"]
+  ["m1 theme(text(big) layout(flex center))", "m1 theme-text-big-layout-flex-center"],
+  ["title()", "title"]
 ];
 
 export default async function test() {

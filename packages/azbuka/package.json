@@ -1,6 +1,6 @@
 {
   "name": "azbuka",
-  "version": "0.18.0",
+  "version": "0.20.0",
   "type": "module",
   "description": "Azbuka - write CSS styles in your own alphabet",
   "author": "Krasimir Tsonev",

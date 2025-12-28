@@ -175,7 +175,18 @@ export function astToRules(ast, options) {
 }
 
 export function rulesToCSS(rules) {
-  return rules.map((r) => r.toString()).join("\n");
+  const normal = [];
+  const media = [];
+
+  rules.forEach((rule) => {
+    if (rule.type === "atrule" && rule.name === "media") {
+      media.push(rule);
+    } else {
+      normal.push(rule);
+    }
+  });
+
+  return [...normal, ...media].map((r) => r.toString()).join("\n");
 }
 
 export function nodeToClassNames(node) {
