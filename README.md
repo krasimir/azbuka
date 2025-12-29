@@ -6,6 +6,6 @@
 
 Azbuka - Write CSS styles in your own alphabet.
 
-* Introductory blog post: https://krasimirtsonev.com/blog/article/azbuka-treating-css-like-a-real-programming-language-finally
+* Introductory blog post: [Azbuka: Treating CSS Like a Real Programming Language (Finally)](https://krasimirtsonev.com/blog/article/azbuka-treating-css-like-a-real-programming-language-finally)
 * Full documentation: https://azbuka.krasimirtsonev.com
 * Examples: [Vanilla JavaScript](./examples/vanilla/), [React](./examples/react/)
