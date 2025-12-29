@@ -42,9 +42,7 @@ function App() {
                 <span className="warning">✖</span> Not a CSS-in-JS solution
               </small>
             </p>
-            <p className="mt1">
-              Azbuka gives you the freedom to create your own utilities and compile them into CSS.
-            </p>
+            <p className="mt1">Azbuka gives you the freedom to create your own utilities and compile them into CSS.</p>
           </div>
           <div className={az("mobile:mt2")}>
             <nav className="flex-col gap1">
@@ -67,6 +65,14 @@ function App() {
               <a href="https://github.com/krasimir/azbuka" target="_blank" className="flex-center gap05">
                 <img src="/github.svg" width="20" />
                 GitHub repo
+              </a>
+              <a
+                href="https://krasimirtsonev.com/blog/article/azbuka-treating-css-like-a-real-programming-language-finally"
+                target="_blank"
+                className="flex-center gap05"
+              >
+                <img src="/edit.svg" width="20" />
+                Introductory blog post
               </a>
             </nav>
           </div>
@@ -92,7 +98,9 @@ function App() {
               Krasimir Tsonev
             </a>
             <small className="b mt2">
-              <a href="https://github.com/krasimir/azbuka" className="paler">github.com/krasimir/azbuka</a>
+              <a href="https://github.com/krasimir/azbuka" className="paler">
+                github.com/krasimir/azbuka
+              </a>
             </small>
           </p>
         </div>
