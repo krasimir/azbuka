@@ -44,6 +44,9 @@ a {
   color: var(--text);
   text-decoration: underline;
 }
+header a {
+  text-decoration: none;
+}
 
 .warning { color: var(--warning); }
 .success { color: var(--success); }
@@ -125,6 +128,12 @@ header {
 }
 .hero nav a:hover {
   background: radial-gradient(125% 125% at 50% 10%, #595959 40%, #000000 100%);
+}
+.hero nav a.why {
+  background: radial-gradient(125% 125% at 50% 10%, #3f2626 40%, #000000 100%);
+}
+.hero nav a.why:hover {
+  background: radial-gradient(125% 125% at 50% 10%, #4c2121 40%, #000000 100%);
 }
 hr {
   border-top: solid 4px var(--background-light2);

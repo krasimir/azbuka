@@ -3,17 +3,14 @@ import Syntax from './sections/Syntax';
 import Playground from './sections/Playground';
 import GettingStarted from './sections/GettingStarted';
 import API from './sections/API';
+import Navigation from './Navigation';
+import Header from './Header';
+import Footer from './Footer';
 
 function App() {
   return (
     <>
-      <header>
-        <div className={az("maxw1000 mxauto p1 desktop:py3")}>
-          <div className="flex-center gap1">
-            <img src="/azbuka.svg" width="100" height="100" alt="Azbuka logo" />
-          </div>
-        </div>
-      </header>
+      <Header />
       <section className={az("hero bg-black py3 mobile:p1")}>
         <div className={az("maxw800 mxauto grid2x1 gap2 mobile:b")}>
           <div>
@@ -45,36 +42,7 @@ function App() {
             <p className="mt1">Azbuka gives you the freedom to create your own utilities and compile them into CSS.</p>
           </div>
           <div className={az("mobile:mt2")}>
-            <nav className="flex-col gap1">
-              <a href="#syntax" className="flex-center gap05">
-                <img src="/align-left.svg" width="20" />
-                Syntax
-              </a>
-              <a href="#getting-started" className="flex-center gap05">
-                <img src="/play-circle.svg" width="20" />
-                Getting started
-              </a>
-              <a href="#api" className="flex-center gap05">
-                <img src="/sliders.svg" width="20" />
-                API & Configuration
-              </a>
-              <a href="#playground" className="flex-center gap05">
-                <img src="/code.svg" width="20" />
-                Playground
-              </a>
-              <a href="https://github.com/krasimir/azbuka" target="_blank" className="flex-center gap05">
-                <img src="/github.svg" width="20" />
-                GitHub repo
-              </a>
-              <a
-                href="https://krasimirtsonev.com/blog/article/azbuka-treating-css-like-a-real-programming-language-finally"
-                target="_blank"
-                className="flex-center gap05"
-              >
-                <img src="/edit.svg" width="20" />
-                Introductory blog post
-              </a>
-            </nav>
+            <Navigation />
           </div>
         </div>
         <div style={{ maxWidth: "800px" }} className="mxauto mt3">
@@ -90,21 +58,7 @@ function App() {
       <GettingStarted />
       <API />
       <Playground />
-      <footer className="border-t">
-        <div className={az("maxw1000 mxauto p1 desktop:py3 tac fz15")}>
-          <p>
-            Made with ❤️ by{" "}
-            <a href="https://krasimir.dev" target="_blank">
-              Krasimir Tsonev
-            </a>
-            <small className="b mt2">
-              <a href="https://github.com/krasimir/azbuka" className="paler">
-                github.com/krasimir/azbuka
-              </a>
-            </small>
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }
