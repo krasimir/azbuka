@@ -63,7 +63,9 @@ export default async function test() {
     const css = await Azbuka({
       verbose: false,
       breakpoints: {
-        d: "(min-width: 1024px)"
+        media: {
+          d: "(min-width: 1024px)"
+        }
       },
       macros: {
         layout: (args) => {

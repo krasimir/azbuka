@@ -3,11 +3,16 @@ export type AzbukaOptions = {
   usageFiles?: string[];
   usageAttributes?: string[];
   breakpoints?: {
-    [key: string]: string;
+    media?: {
+      [key: string]: string;
+    };
+    container?: {
+      [key: string]: string;
+    };
   };
   macros?: {
     [key: string]: Function;
-  },
+  };
   verbose?: boolean;
   minify?: boolean;
   bundleAll?: boolean;

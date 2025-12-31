@@ -286,9 +286,11 @@ export default function test() {
       config: {
         minify: true,
         breakpoints: {
-          desktop: "all and (min-width: 1024px)",
-          mobile: "all and (max-width: 1023px)",
-          portrait: "all and (orientation: portrait)"
+          media: {
+            desktop: "all and (min-width: 1024px)",
+            mobile: "all and (max-width: 1023px)",
+            portrait: "all and (orientation: portrait)"
+          }
         }
       }
     });

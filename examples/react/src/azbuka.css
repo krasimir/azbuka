@@ -1,21 +1,3 @@
-@media all and (min-width: 768px) {
-    .desktop_w400 {
-        width: 400px
-    }
-    .desktop_p2 {
-        padding: 2rem
-    }
-    .desktop_flex-row {
-        display: flex;
-        flex-direction: row
-    }
-    .desktop_align-center {
-        align-items: center
-    }
-    .desktop_autow {
-        width: auto
-    }
-}
 .light .light-I_surface-light {
     background-color: var(--surface-light)
 }
@@ -33,4 +15,22 @@
 }
 .I-disabled-hover_primary-bg:disabled:hover {
     background-color: var(--primary-color)
+}
+@media all and (min-width: 768px) {
+    .desktop_w400 {
+        width: 400px
+    }
+    .desktop_p2 {
+        padding: 2rem
+    }
+    .desktop_flex-row {
+        display: flex;
+        flex-direction: row
+    }
+    .desktop_align-center {
+        align-items: center
+    }
+    .desktop_autow {
+        width: auto
+    }
 }

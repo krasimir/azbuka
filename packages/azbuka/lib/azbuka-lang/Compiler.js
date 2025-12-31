@@ -6,6 +6,7 @@ import { toAST } from "./Parser.js";
 export function astToRules(ast, options) {
   let rules = [];
   const { getStylesByClassName, cache = {}, config, currentSelector } = options
+  const breakpoints = config.breakpoints;
   // console.log(
   //   "\n====================================================================== ^\n",
   //   JSON.stringify(ast, null, 2)
@@ -33,14 +34,16 @@ export function astToRules(ast, options) {
             createRule(`${selector}:${variantSelector}`, cls);
           });
         // -------------------------------------------------------- media queries
-        } else if (config.breakpoints[variantSelector]) {
+        } else if (breakpoints?.media?.[variantSelector] || breakpoints?.container?.[variantSelector]) {
+          let isMedia = !!breakpoints?.media?.[variantSelector];
+          const breakpointValue = breakpoints?.media?.[variantSelector] || breakpoints?.container?.[variantSelector];
           let mediaRule;
-          if (cache[config.breakpoints[variantSelector]]) {
-            mediaRule = cache[config.breakpoints[variantSelector]];
+          if (cache[breakpointValue]) {
+            mediaRule = cache[breakpointValue];
           } else {
-            mediaRule = cache[config.breakpoints[variantSelector]] = postcss.atRule({
-              name: "media",
-              params: config.breakpoints[variantSelector]
+            mediaRule = cache[breakpointValue] = postcss.atRule({
+              name: isMedia ? "media" : "container",
+              params: breakpointValue
             });
             rules.push(mediaRule);
           }

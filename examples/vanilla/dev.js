@@ -14,8 +14,10 @@ const app = express();
 
 Azbuka({
   breakpoints: {
-    desktop: "all and (min-width: 768px)",
-    mobile: "all and (max-width: 768px)"
+    media: {
+      desktop: "all and (min-width: 768px)",
+      mobile: "all and (max-width: 768px)"
+    }
   },
   minify: false,
 }).parseDirectory({
