@@ -31,9 +31,11 @@ export default function GettingStarted() {
   "dir": "./src",
   "output": "./public/styles.css",
   "breakpoints": {
-    "mobile": "480px",
-    "tablet": "768px",
-    "desktop": "1024px"
+    "media": {
+      "mobile": "480px",
+      "tablet": "768px",
+      "desktop": "1024px"
+    }
   }
 }`}
             </code>

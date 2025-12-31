@@ -29,13 +29,16 @@ const CONFIG = [
     type: "optional",
     description: (
       <span>
-        An object defining custom breakpoints.
+        An object defining custom breakpoints (media and container queries).
         <pre>
           <code className="language-json">{`{
-  "sm": "640px",
-  "md": "768px",
-  "lg": "1024px",
-  "xl": "1280px"
+  "media": {
+    "desktop": "(min-width: 780px)",
+    "mobile": "(max-width: 779px)"
+  },
+  "container": {
+    "c500": "(min-width: 500px)",
+  }
 }`}</code>
         </pre>
         so you can use <code>sm:mt1</code> for example.
@@ -54,7 +57,8 @@ const CONFIG = [
   "title": () => "tac fz2 desktop:fz3"
 }`}</code>
         </pre>
-        so you can use <code>title()</code> in your class names. Have in mind that the macros can also accept arguments. For example:
+        so you can use <code>title()</code> in your class names. Have in mind that the macros can also accept arguments.
+        For example:
         <pre>
           <code className="language-javascript">{`{
   "layout": (type) => {
@@ -122,8 +126,7 @@ export default function API() {
         </h3>
         <p className="mt1">
           Azbuka is by default searching for <code>azbuka.config.json</code>, <code>azbuka.config.js</code> or{" "}
-          <code>azbuka.config.mjs</code> in the root folder of the project. The returned object has the following
-          shape:
+          <code>azbuka.config.mjs</code> in the root folder of the project. The returned object has the following shape:
         </p>
         <div className="mt2">
           <Table items={CONFIG} />
@@ -148,9 +151,10 @@ const azbuka = Azbuka({
   usageFiles: ['html', 'jsx', 'tsx'], // optional
   usageAttributes: ['class', 'className'], // optional
   breakpoints: {
-    mobile: '480px',
-    tablet: '768px',
-    desktop: '1024px'
+    media: {
+      desktop: "(min-width: 780px)",
+      mobile: "(max-width: 779px)"
+    }
   }, // optional
   verbose: false, // optional
   minify: false, // optional
@@ -182,9 +186,8 @@ const cssC = await azbuka.parse({
           </pre>
         </div>
         <p>
-          The object that you pass to the <code>Azbuka</code> function is the{" "}
-          <a href="#configuration">configuration</a> object that controls how Azbuka processes your files and
-          generates CSS.
+          The object that you pass to the <code>Azbuka</code> function is the <a href="#configuration">configuration</a>{" "}
+          object that controls how Azbuka processes your files and generates CSS.
         </p>
       </div>
     </div>

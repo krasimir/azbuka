@@ -27,7 +27,9 @@ export const DEFAULT_FILES = [
     filename: "azbuka.config.js",
     content: `export default {
   breakpoints: {
-    d: "all and (min-width: 768px)"
+    media: {
+      d: "all and (min-width: 768px)"
+    }
   },
   macros: {
     layout: (args) => {
