@@ -53,11 +53,11 @@ function App() {
           </p>
           <p>
             It doesn’t ship a predefined set of classes. Instead, it gives you the tools to{" "}
-            <strong>design your own utility language</strong>
+            <strong>design your own utility language</strong>{" "}
             and compile it into CSS.
           </p>
           <p>
-            You don’t adopt someone else’s vocabulary — you{" "}
+            You don’t adopt someone else’s vocabulary - you{" "}
             <strong>create the one that matches your product and team</strong>.
           </p>
         </div>
@@ -144,7 +144,7 @@ function App() {
 
           <h3 className="mt2">🧠 Programmable utility language</h3>
           <p className="mt1">
-            Utilities in Azbuka are not strings — they are <strong>syntax trees</strong>.
+            Utilities in Azbuka are not strings - they are <strong>syntax trees</strong>.
           </p>
           <p className="mt1">That means they can:</p>
           <ul className="mt1 list">
